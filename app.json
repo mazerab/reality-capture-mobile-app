@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "reality-capture-mobile-app",
+    "description": "A mobile app project showcasing Autodesk Forge Reality Capture API.",
+    "slug": "reality-capture-mobile-app",
+    "privacy": "public",
+    "sdkVersion": "25.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}
