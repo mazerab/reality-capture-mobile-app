@@ -2,9 +2,9 @@
 
 module.exports = {
 
-    FORGE_APP_ID: 'KqsBumMwCGnpPwEQcdIxEh0sQumG4Gha',
+    FORGE_APP_ID: 'your Forge app ID goes here ...',
 
-    AWS_LAMBDA_BASE_ENDPOINT: 'https://l837xgneyd.execute-api.us-east-1.amazonaws.com/demo',
+    AWS_LAMBDA_BASE_ENDPOINT: 'https://myserver.execute-api.us-east-1.amazonaws.com/demo',
     AWS_S3_BASE_ENDPOINT: 'https://s3.console.aws.amazon.com/s3/buckets',
     AWS_S3_BUCKET: 'reality-capture-images',
 
