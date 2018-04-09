@@ -1,15 +1,18 @@
 import React from 'react';
 import { ActivityIndicator, Button, Image, Share, StatusBar, StyleSheet, Text, View } from 'react-native';
-import Exponent, { Constants, FileSystem, ImagePicker } from 'expo';
+import Exponent, { Constants, FileSystem, ImagePicker, Notifications } from 'expo';
 
 import Config from '../constants/Config';
 
+import PushNotificationService from '../api/PushNotificationService';
 import AWSS3Service from '../api/AWSS3Service';
 import DataService from '../api/DataService';
 import DerivativeService from '../api/DerivativeService';
 import OAuthForge from '../api/OAuthForge';
 import ProcessingScreen from './ProcessingScreen';
+import Utils from '../api/Utils';
 import RecapService from '../api/RecapService';
+import RedisService from '../api/RedisService';
 
 let mTabNav;
 
@@ -23,6 +26,7 @@ export default class ImageScreen extends React.Component {
     this.state = { 
         fileSizeMatch: false,
         image: null,
+        notification: {},
         processButtonDisabled: false,
         processing: false,
         processingDone: false,
@@ -34,12 +38,27 @@ export default class ImageScreen extends React.Component {
   };
 
   componentDidMount() {
+    console.info('INFO: Entering componentDidMount...');
     // Initialize AWS S3 service
     this.AWSS3Service = new AWSS3Service();
-    // Initialize Recap service
-    this.RecapService = new RecapService();
     // Login to Forge using 3-legged oAuth
     this.OAuthForge.initToken();
+    // Initialize Redis database
+    this.RedisService = new RedisService();
+    this.RedisService.initBackend();
+    // Push notifications
+    this.PushNotificationService = new PushNotificationService();
+    this.PushNotificationService.registerForPushNotificationsAsync();
+    // Handle notifications that are received or selected while the app
+    // is open. If the app was closed and then opened by tapping the
+    // notification (rather than just tapping the app icon to open it),
+    // this function will fire on the next tick after the app starts
+    // with the notification data.
+    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+  };
+
+  _handleNotification = (notification) => {
+    this.setState({notification: notification});
   };
 
   render() {
@@ -65,21 +84,15 @@ export default class ImageScreen extends React.Component {
   handleImagePicked = async pickerResult => {
     try {
       if (!this.uploading) {
-        // Create photoscene
         this.uploading = true;
-        this.RecapService = new RecapService(this.OAuthForge.getToken());
-        await this.RecapService.processPhotoSceneResetAsync();
-        await this.RecapService.createPhotoSceneAsync();
       }
       if (!pickerResult.cancelled) {
-        const fileInfo = await Expo.FileSystem.getInfoAsync(pickerResult.uri);
-        const signedUrl = await this.AWSS3Service.getPreSignedS3BucketUrlAsync(pickerResult.uri);
-        this.AWSS3Service.uploadImageToS3BucketAsync(pickerResult.uri, fileInfo.size, signedUrl)
-        .then((data) => {
-          this.RecapService.addImageAsync(data);
-          this.setState({ image: data });
-        });
-        
+        const imageInfo = await FileSystem.getInfoAsync(pickerResult.uri);
+        const uploadResult = await this.AWSS3Service.uploadImageToS3BucketAsync(pickerResult.uri, imageInfo.size);
+        if(uploadResult) {
+          this.setState({ image: uploadResult.s3Url });
+          const pushS3UrlResult = await this.RedisService.pushS3Url(uploadResult.s3Url);
+        }
       }
     } catch (e) {
       console.error({ e });
@@ -122,31 +135,33 @@ export default class ImageScreen extends React.Component {
   };
 
   processPhotoScene = async() => {
-      const processResult = await this.RecapService.processPhotoSceneAsync();
-      if (processResult.msg === 'No error') {
-          this.setState({ processing: true });
-          this.setState({ processButtonDisabled: true });
-          const intervalId = setInterval( () => {
-            if(this.state.processing) {
-                this.RecapService.pollPhotosceneProcessingProgress()
-                    .then( async (processingResult) => {
-                      if (processingResult.photoSceneProcessing === 'Completed') {
-                          this.setState({ processing: false });
-                          const downloadResult = await this.RecapService.downloadProcessedDataAsync();
-                          const intervalId2 = setInterval( async () => {
-                            if(!this.state.fileSizeMatch) {
-                              const checkDownloadSize = await this.RecapService.checkDownloadSizeAsync();
-                              if (Number(checkDownloadSize.FileSize) === Number(downloadResult.Photoscene.filesize)) {
-                                this.setState({ fileSizeMatch: true, processButtonDisabled: false });
-                                this.uploadToBucket();
-                              }
-                            }
-                          }, 1000);
-                      }
-                    });
+    this.setState({ processing: true });
+    this.RecapService = new RecapService();
+    const processingStatusResult = await this.RecapService.setProcessingStatusInProgress();
+    const processResult = await this.RecapService.processPhotoScene();
+    if (processResult) {
+      if (Config.IOS_SIMULATOR_TESTING) { // iOS simulator does not support push notifications
+        const intervalId = setInterval( async () => {
+          if(this.state.processing) {
+            const progressResult = await this.RecapService.pollProcessingStatus();
+            if(progressResult.processingstatus === 'Completed') {
+              this.setState({ processing: false });
+              this.uploadAndTranslate();
+              clearInterval(intervalId);
             }
-          }, 1000);
+          }
+        }, 1000);
+      } else { // Push notifications
+        const intervalId = setInterval( async () => {
+          if(this.state.processing) {
+            if (this.state.notification.data && this.state.notification.data.Photoscene.scenelink.startsWith('http')) {
+              this.setState({ processing: false });
+              this.uploadAndTranslate();
+            }
+          }
+        }, 1000);
       }
+    }
   }
 
   share = () => {
@@ -162,43 +177,23 @@ export default class ImageScreen extends React.Component {
     this.handleImagePicked(pickerResult);
   };
 
-  translateToSVF = async (objectId) => {
-      this.DerivativeService = new DerivativeService();
-      const translateResult = await this.DerivativeService.translateSourceToSVF(objectId);
-      console.info('translateResult = ' + translateResult);
-      this.setState({ viewFileButtonDisabled: false});
-  }
- 
-  uploadToBucket = async () => {
-      let hubId, projectId, folderId, objectId, objectName;
-      this.DataService = new DataService();
-      const hubsResult = await this.DataService.getHubsAsync();
-      for (let i in hubsResult.data) {
-          if (hubsResult.data[i].attributes.name === Config.hubName) {
-              hubId = hubsResult.data[i].id;
-              break;
-          }
+  uploadAndTranslate = async () => {
+    this.DataService = new DataService();
+    this.DerivativeService = new DerivativeService();
+    const uploadResult = await this.DataService.uploadAndTranslateProcessedData();
+    let manifestStatus = 'notstarted';
+    const manifestResult = await this.DerivativeService.getManifest();
+    console.info('manifestResult = ' + JSON.stringify(manifestResult));
+    /*const intervalId = setInterval(async () => {
+      if (manifestStatus !== 'success') {
+        const manifestResult = await this.DerivativeService.getManifest();
+        console.info('manifestResult = ' + JSON.stringify(manifestResult));
+        clearInterval(intervalId);
+      } else {
+
       }
-      const projectsResult = await this.DataService.getProjectsAsync(hubId);
-      for (let j in projectsResult.data) {
-          if (projectsResult.data[j].attributes.name === Config.projectName) {
-              projectId = projectsResult.data[j].id;
-              folderId = projectsResult.data[j].relationships.rootFolder.data.id;
-              break;
-          }
-      }
-      const storageResult = await this.DataService.createStorageLocationAsync(projectId, folderId);
-      if(storageResult.data !== null || storageResult !== undefined) {
-          objectId = storageResult.data.id;
-          objectName = objectId.split('/').pop();
-          const uploadResult = await this.DataService.uploadFileToStorageLocationAsync(objectName);
-          if(uploadResult) {
-              const versionResult = await this.DataService.createFirstVersionAsync(projectId, folderId, objectId);
-              if(versionResult) {
-                  this.translateToSVF(objectId);
-              }
-          }
-      }
-  }
+    }, 1000);*/
+
+  };
 
 }
