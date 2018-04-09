@@ -1,5 +1,7 @@
 'use strict';
 
+import Config from '../constants/Config';
+
 export default class Utils {
 
     logRequestInfoToConsole(endpoint, httpMethod, url, body) {
