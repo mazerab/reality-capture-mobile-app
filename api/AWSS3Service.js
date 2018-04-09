@@ -3,53 +3,33 @@
 import PathParse from 'path-parse';
 
 import Config from '../constants/Config';
-import Utils from './Utils';
 
 export default class AWSS3Service {
 
-    constructor() {
-        this.utils = new Utils();
-    }
+    constructor() { }
 
-    async getPreSignedS3BucketUrlAsync(imageFileUri) {
-        // Get signed upload url from AWS. Use it to upload a jpg to an S3 bucket.
+    async uploadImageToS3BucketAsync(imageFileUri, fileSize) {
         const fileName = PathParse(imageFileUri).base;
-        const endpoint = Config.AWS_LAMBDA_BASE_ENDPOINT + '/aws/s3/getImageDrop?filename=' + fileName;
-        const api = '/demo/aws/s3/getImageDrop';
-        this.utils.logRequestInfoToConsole(api, 'POST', endpoint, null);
-        return fetch(endpoint, {
-            method: 'GET'
-        })
-            .then((res) => {
-                this.utils.logResponseInfoToConsole(api, 'POST', res);
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    this.utils.logResponseErrorToConsole('Failed to create signed S3 url!', res);
-                    alert('Failed to create signed S3 url!');
-                }
-            })
-            .catch((err) => {
-                this.utils.logFetchErrorToConsole(err);
-            });
-    }
-
-    uploadImageToS3BucketAsync(imageFileUri, fileSize, signedUrl) {
+        const s3Url = Config.AWS_S3_BASE_ENDPOINT + '/' + Config.AWS_S3_BUCKET + '/' + fileName;
+        const photo = {
+            'name': fileName,
+            'type': 'image/jpeg',
+            'uri': imageFileUri
+        };
         return new Promise(function(resolve, reject) {
-            const fileName = PathParse(imageFileUri).base;
             const xhr = new XMLHttpRequest();
-            xhr.open('PUT', signedUrl.url);
-            xhr.setRequestHeader('X-Amz-ACL', 'public-read');
+            xhr.open('PUT', s3Url);
             xhr.setRequestHeader('Content-Type', 'image/jpeg');
+            xhr.setRequestHeader('X-Amz-ACL', 'public-read');
             xhr.onload = function() {
                 if (this.status >= 200 && this.status < 300) {
-                    console.info('INFO: File Uploaded to S3 at: ' + JSON.stringify(signedUrl.url));
-                    resolve(signedUrl.url);
+                    console.info('INFO: File Uploaded to S3 at: ' + s3Url);
+                    resolve({ 's3Url': s3Url });
                 } else {
-                    console.error('ERROR: File upload failed. :( ');
+                    console.error('ERROR: File upload failed. :( ' + fileName);
                     reject({
-                       status: this.status,
-                       statusText: xhr.statusText
+                        status: this.status,
+                        statusText: xhr.statusText
                     });
                 }
             };
@@ -59,9 +39,8 @@ export default class AWSS3Service {
                     statusText: xhr.statusText
                 });
             };
-            xhr.send({ uri: imageFileUri, type: 'image/jpeg', name: fileName });
+            xhr.send(photo);
         });
-
     }
-
+    
 }
