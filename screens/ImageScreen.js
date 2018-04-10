@@ -31,7 +31,7 @@ export default class ImageScreen extends React.Component {
         processing: false,
         processingDone: false,
         processingError: false,
-        scenelink: null, 
+        urn: null, 
         viewFileButtonDisabled: true
     };
     this.OAuthForge = new OAuthForge();
@@ -57,6 +57,11 @@ export default class ImageScreen extends React.Component {
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
   };
 
+  componentWillUnmount() {
+    clearInterval(this.state.processPhotosceneIntervalId);
+    clearInterval(this.state.processTranslationIntervalId);
+  }
+
   _handleNotification = (notification) => {
     this.setState({notification: notification});
   };
@@ -75,7 +80,7 @@ export default class ImageScreen extends React.Component {
         <StatusBar barStyle="default" />
         <Button onPress={ this.processPhotoScene } title='Process Photoscene' disabled={this.state.processButtonDisabled} />
         <Button title='View File' disabled={this.state.viewFileButtonDisabled} onPress={ () => {
-          mTabNav.navigate('Viewer', { urn: this.scenelink, token: this.state.token })
+          mTabNav.navigate('Viewer', { urn: this.state.urn, token: this.state.token })
         }} />
       </View>
     );
@@ -89,6 +94,7 @@ export default class ImageScreen extends React.Component {
       if (!pickerResult.cancelled) {
         const imageInfo = await FileSystem.getInfoAsync(pickerResult.uri);
         const uploadResult = await this.AWSS3Service.uploadImageToS3BucketAsync(pickerResult.uri, imageInfo.size);
+        console.info('INFO: Upload to S3 Response: ' + JSON.stringify(uploadResult));
         if(uploadResult) {
           this.setState({ image: uploadResult.s3Url });
           const pushS3UrlResult = await this.RedisService.pushS3Url(uploadResult.s3Url);
@@ -146,11 +152,12 @@ export default class ImageScreen extends React.Component {
             const progressResult = await this.RecapService.pollProcessingStatus();
             if(progressResult.processingstatus === 'Completed') {
               this.setState({ processing: false });
+              clearInterval(this.state.processPhotosceneIntervalId);
               this.uploadAndTranslate();
-              clearInterval(intervalId);
             }
           }
         }, 1000);
+        this.setState({ processPhotosceneIntervalId: intervalId });
       } else { // Push notifications
         const intervalId = setInterval( async () => {
           if(this.state.processing) {
@@ -181,19 +188,30 @@ export default class ImageScreen extends React.Component {
     this.DataService = new DataService();
     this.DerivativeService = new DerivativeService();
     const uploadResult = await this.DataService.uploadAndTranslateProcessedData();
-    let manifestStatus = 'notstarted';
-    const manifestResult = await this.DerivativeService.getManifest();
-    console.info('manifestResult = ' + JSON.stringify(manifestResult));
-    /*const intervalId = setInterval(async () => {
-      if (manifestStatus !== 'success') {
-        const manifestResult = await this.DerivativeService.getManifest();
-        console.info('manifestResult = ' + JSON.stringify(manifestResult));
-        clearInterval(intervalId);
-      } else {
-
-      }
-    }, 1000);*/
-
+    console.info('uploadResult status = ' + uploadResult.status);
+    if(uploadResult.status === 200) { 
+      let manifestStatus = 'notstarted';
+      let urn;
+      const intervalId = setInterval(async () => {
+        if (this.state.viewFileButtonDisabled) {
+          if (manifestStatus !== 'success') {
+            const manifestResult = await this.DerivativeService.getManifest();
+            if(manifestResult) {
+              manifestStatus = manifestResult.status;
+              urn = manifestResult.urn;
+            }
+          } else {
+            console.info('manifestStatus: ' + manifestStatus);
+            console.info('urn: ' + urn);
+            if(urn) {
+              this.setState({ viewFileButtonDisabled: false, urn: urn });
+              clearInterval(this.state.processTranslationIntervalId);
+            }
+          }
+        }
+      }, 1000);
+      this.setState({ processTranslationIntervalId: intervalId });
+    };
   };
 
 }
