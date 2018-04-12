@@ -189,7 +189,8 @@ export default class ImageScreen extends React.Component {
   };
 
   uploadAndTranslate = async () => {
-    this.setState({ processing: true, processButtonDisabled: true });
+    //this.setState({ processing: true, processButtonDisabled: true });
+    this.setState({ processButtonDisabled: true });
     this.DataService = new DataService();
     this.DerivativeService = new DerivativeService();
     const uploadResult = await this.DataService.uploadAndTranslateProcessedData();
@@ -207,7 +208,8 @@ export default class ImageScreen extends React.Component {
           }
           if (manifestStatus === 'success' && !this.manifestStatusIgnore && urn) {
             this.manifestStatusIgnore = true;
-            this.setState({ processing: false, urn: urn, viewFileButtonDisabled: false });
+            //this.setState({ processing: false, urn: urn, viewFileButtonDisabled: false });
+            this.setState({ urn: urn, viewFileButtonDisabled: false });
             clearInterval(this.state.processTranslationIntervalId);
           }
         }
