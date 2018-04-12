@@ -1,6 +1,9 @@
 'use strict';
 
+import { Alert } from 'react-native';
+
 import Config from '../constants/Config';
+import RedisService from './RedisService';
 import Utils from './Utils';
 
 export default class DataService {
@@ -22,8 +25,26 @@ export default class DataService {
                 if (res.ok) {
                     return res.json();
                 } else {
-                    this.utils.logResponseErrorToConsole('Failed to upload processed data to Autodesk Cloud!', res);
-                    alert('Failed to upload processed data to Autodesk Cloud!');
+                    //this.utils.logResponseErrorToConsole('Failed to upload processed data to Autodesk Cloud!', res);
+                    const message = JSON.parse(res._bodyText);
+                    Alert.alert(
+                        'Failed to upload processed data to Autodesk Cloud!',
+                        message['ERROR'],
+                        [
+                            {
+                                text: 'Cancel', 
+                                onPress: () => { console.info('INFO: Hit Cancel button!'); } 
+                            },
+                            {
+                                text: 'Retry', 
+                                onPress: () => { 
+                                    this.RedisService = new RedisService();
+                                    this.RedisService.initBackend();
+                                }
+                            }
+                        ],
+                        { cancelable: false }
+                    );
                 }
             })
             .catch((err) => {
