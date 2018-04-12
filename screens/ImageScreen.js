@@ -23,8 +23,7 @@ export default class ImageScreen extends React.Component {
   constructor(props) {
     super(props);
     this.uploading = false;
-    this.state = { 
-        fileSizeMatch: false,
+    this.state = {
         image: null,
         notification: {},
         processButtonDisabled: false,
@@ -55,9 +54,13 @@ export default class ImageScreen extends React.Component {
     // this function will fire on the next tick after the app starts
     // with the notification data.
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
+    // Reset ignore flags
+    this.translateIgnore = false;
+    this.manifestStatusIgnore = false;
   };
 
   componentWillUnmount() {
+    console.info('INFO: Entering componentWillUnmount...');
     clearInterval(this.state.processPhotosceneIntervalId);
     clearInterval(this.state.processTranslationIntervalId);
   }
@@ -80,7 +83,7 @@ export default class ImageScreen extends React.Component {
         <StatusBar barStyle="default" />
         <Button onPress={ this.processPhotoScene } title='Process Photoscene' disabled={this.state.processButtonDisabled} />
         <Button title='View File' disabled={this.state.viewFileButtonDisabled} onPress={ () => {
-          mTabNav.navigate('Viewer', { urn: this.state.urn, token: this.state.token })
+          mTabNav.navigate('Viewer', { urn: this.state.urn, token: this.OAuthForge.getToken() })
         }} />
       </View>
     );
@@ -147,10 +150,11 @@ export default class ImageScreen extends React.Component {
     const processResult = await this.RecapService.processPhotoScene();
     if (processResult) {
       if (Config.IOS_SIMULATOR_TESTING) { // iOS simulator does not support push notifications
-        const intervalId = setInterval( async () => {
+        const intervalId = setInterval(async () => {
           if(this.state.processing) {
             const progressResult = await this.RecapService.pollProcessingStatus();
-            if(progressResult.processingstatus === 'Completed') {
+            if(progressResult.processingstatus === 'Completed' && !this.translateIgnore) {
+              this.translateIgnore = true;
               this.setState({ processing: false });
               clearInterval(this.state.processPhotosceneIntervalId);
               this.uploadAndTranslate();
@@ -188,8 +192,7 @@ export default class ImageScreen extends React.Component {
     this.DataService = new DataService();
     this.DerivativeService = new DerivativeService();
     const uploadResult = await this.DataService.uploadAndTranslateProcessedData();
-    console.info('uploadResult status = ' + uploadResult.status);
-    if(uploadResult.status === 200) { 
+    if(uploadResult.statusCode === 200) { 
       let manifestStatus = 'notstarted';
       let urn;
       const intervalId = setInterval(async () => {
@@ -200,11 +203,11 @@ export default class ImageScreen extends React.Component {
               manifestStatus = manifestResult.status;
               urn = manifestResult.urn;
             }
-          } else {
-            console.info('manifestStatus: ' + manifestStatus);
-            console.info('urn: ' + urn);
+          if (manifestStatus === 'success' && !this.manifestStatusIgnore)
             if(urn) {
+              this.manifestStatusIgnore = true;
               this.setState({ viewFileButtonDisabled: false, urn: urn });
+              console.info('state = ' + JSON.stringify(this.state));
               clearInterval(this.state.processTranslationIntervalId);
             }
           }
