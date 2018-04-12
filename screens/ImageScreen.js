@@ -207,7 +207,6 @@ export default class ImageScreen extends React.Component {
             if(urn) {
               this.manifestStatusIgnore = true;
               this.setState({ viewFileButtonDisabled: false, urn: urn });
-              console.info('state = ' + JSON.stringify(this.state));
               clearInterval(this.state.processTranslationIntervalId);
             }
           }
