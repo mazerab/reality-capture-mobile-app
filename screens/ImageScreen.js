@@ -30,6 +30,8 @@ export default class ImageScreen extends React.Component {
         processing: false,
         processingDone: false,
         processingError: false,
+        s3Svf: null,
+        svfurn: null,
         urn: null, 
         viewFileButtonDisabled: true
     };
@@ -83,7 +85,7 @@ export default class ImageScreen extends React.Component {
         <StatusBar barStyle="default" />
         <Button onPress={ this.processPhotoScene } title='Process Photoscene' disabled={this.state.processButtonDisabled} />
         <Button title='View File' disabled={this.state.viewFileButtonDisabled} onPress={ () => {
-          mTabNav.navigate('Viewer', { urn: this.state.urn, token: this.OAuthForge.getToken() })
+          mTabNav.navigate('ForgeViewer', { urn: this.state.urn, token: this.OAuthForge.getToken() })
         }} />
       </View>
     );
@@ -153,7 +155,11 @@ export default class ImageScreen extends React.Component {
         const intervalId = setInterval(async () => {
           if(this.state.processing) {
             const progressResult = await this.RecapService.pollProcessingStatus();
-            if(progressResult.processingstatus === 'Completed' && !this.translateIgnore) {
+            const photoscenelink = await this.RecapService.getPhotoSceneLink();
+            if( progressResult.processingstatus === 'Completed' 
+              && !this.translateIgnore 
+              && photoscenelink.photoscenelink !== 'blank') {
+              console.info('INFO: Processing is complete and photoscenelink is available to upload to Autodesk Cloud...')
               this.translateIgnore = true;
               this.setState({ processing: false });
               clearInterval(this.state.processPhotosceneIntervalId);
@@ -165,7 +171,7 @@ export default class ImageScreen extends React.Component {
       } else { // Push notifications
         const intervalId = setInterval( async () => {
           if(this.state.processing) {
-            if (this.state.notification.data && this.state.notification.data.Photoscene.scenelink.startsWith('http')) {
+            if (this.state.notification.data && this.state.notification.data.Photoscene.scenelink !== 'blank') {
               this.setState({ processing: false });
               this.uploadAndTranslate();
             }
@@ -208,9 +214,14 @@ export default class ImageScreen extends React.Component {
           }
           if (manifestStatus === 'success' && !this.manifestStatusIgnore && urn) {
             this.manifestStatusIgnore = true;
-            //this.setState({ processing: false, urn: urn, viewFileButtonDisabled: false });
-            this.setState({ urn: urn, viewFileButtonDisabled: false });
-            clearInterval(this.state.processTranslationIntervalId);
+            console.info('INFO: setting urn: ' + urn);
+            const derivativeUrnResult = await this.DerivativeService.getDerivativeUrn();
+            console.info('derivativeUrnResult = ' + JSON.stringify(derivativeUrnResult));
+            if(derivativeUrnResult) {
+              const s3Url = 'https://s3.amazonaws.com/reality-capture-images/result.obj.svf';
+              this.setState({ urn: urn, s3Svf: s3Url, viewFileButtonDisabled: false });
+              clearInterval(this.state.processTranslationIntervalId);
+            }
           }
         }
       }, 1000);
