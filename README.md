@@ -17,3 +17,6 @@ I’ve been interested in React Native for a while, and have been wanting to use
 
 1. Deploy new AWS lambda function to run [reality-capture-backend-app](https://github.com/mazerab/reality-capture-backend-app). 
 1. Deploy new AWS lambda function to run [obj-upload-translate-app](https://github.com/mazerab/obj-upload-translate-app).
+1. Follow the READMEs found in these two repositories to learn how to setup and deploy the AWS lambda functions.
+1. Install the Expo local development tool XDE by navigating to this [link](https://docs.expo.io/versions/latest/introduction/installation.html).
+
