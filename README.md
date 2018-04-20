@@ -39,10 +39,10 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 * Save the changes
 * Launch the Expo XDE Client to open project and browse to your app root directory
 
-  <img src="/assets/images/expo-open-project.png" width="600" height="400">
+  <img src="/assets/images/expo-open-project.png" width="550" height="400">
 * Open the iOS Simulator to start the app
 
-  <img src="/assets/images/open-ios-simulator.png" width="200" height="100">
+  <img src="/assets/images/open-ios-simulator.png" width="200" height="150">
 * In the iOS Simulator, you will be prompted to use *"expo.io"* to Sign In, choose **Continue**
   ![Continue](/assets/images/expo-io-sign-in.png)
 * Next prompt will ask you to sign into another service, choose **Yes**
