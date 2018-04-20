@@ -45,7 +45,16 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 
   ![Open iOS Simulator](/assets/images/open-ios-simulator.png)
 
+1. In the iOS Simulator, you will be prompted to use *"expo.io"* to Sign In, choose **Continue**
 
+  ![Continue]()
+  
+1. Next prompt will ask you to sign into another service, choose **Yes**
+1. You will then be redirected to the sign in page of Autodesk, you will get a 400 invalid redirect_uri error
+
+  ![Sign In Error]()
+  
+1. 
 
 
 
