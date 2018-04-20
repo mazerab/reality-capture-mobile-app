@@ -23,5 +23,7 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 1. Install the Expo local development tool XDE by navigating to this [link](https://docs.expo.io/versions/latest/introduction/installation.html).
 1. Download the client app source code from this [url](https://github.com/mazerab/reality-capture-mobile-app/archive/master.zip)
 1. Extract the client app source code to a new directory on your development machine
-1. Open a terminal 
+1. Open a terminal and navigate to the new directory
+1. Run the command **npm install**
+
 
