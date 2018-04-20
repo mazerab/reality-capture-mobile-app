@@ -19,4 +19,7 @@ I’ve been interested in React Native for a while, and have been wanting to use
 1. Deploy new AWS lambda function to run [obj-upload-translate-app](https://github.com/mazerab/obj-upload-translate-app).
 1. Follow the READMEs found in these two repositories to learn how to setup and deploy the AWS lambda functions.
 1. Install the Expo local development tool XDE by navigating to this [link](https://docs.expo.io/versions/latest/introduction/installation.html).
+1. Download the client app source code from this [url](https://github.com/mazerab/reality-capture-mobile-app/archive/master.zip)
+1. Extract the client app source code to a new directory on your development machine
+1. Open a terminal 
 
