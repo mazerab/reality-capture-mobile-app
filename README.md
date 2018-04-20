@@ -59,9 +59,13 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
   
 1. Go back to the Expo XDE Client and look for a message stating *"Copy this redirect url to the Forge app callback ..."*
 
+  ![Redirect URL](/assets/images/redirect-url.png)
+
 1. Copy the URL
 
 1. Edit your Forge App and change the callback URL to the URL you just copied
+
+  ![Forge Callback URL](/assets/images/callback-url.png)
 
 1. Save the changes in your Forge app
 
@@ -69,9 +73,15 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 
 1. Login with your Autodesk ID
 
+  ![Autodesk Login](/assets/images/adsk-sign-in.png)
+
 1. You will see the main screen, select *"Pick an image from camera roll"* to select your first image
 
+  ![Main Screen](/assets/images/main-app-screen.png)
+
 1. Repeat the process by adding two or more images
+
+  ![Pick Image](/assets/images/pick-an-image-from-camera-roll.png)
 
 1. When you have added enough images, select *"Process Photoscene"*
 
