@@ -33,11 +33,12 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 1. Extract the client app source code to a new directory on your development machine
 1. Open a terminal and navigate to the new directory
 1. Run the command **npm install** to install the dependencies. If successful, you will notice a new sub-directory called node_modules in the root of your app directory.
-1. Launch the Expo XDE Client to open project and browse to your app root directory
-  ![Open Expo Project](/assets/images/expo-open-project.png)
 1. Using your favorite text editor, open the file ./constants/Config.js
 1. Edit the variables FORGE_APP_ID, AWS_RECAP_LAMBDA_BASE_ENDPOINT, AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT and AWS_S3_BUCKET to reflect your environment
 1. Save the changes
+1. Launch the Expo XDE Client to open project and browse to your app root directory
+  ![Open Expo Project](/assets/images/expo-open-project.png)
+
 
 
 
