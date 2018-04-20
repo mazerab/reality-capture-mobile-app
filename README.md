@@ -59,7 +59,8 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 * You will see the main screen, select *"Pick an image from camera roll"* to select your first image
   ![Main Screen](/assets/images/main-app-screen.png)
 * Repeat the process by adding two or more images
-  ![Pick Image](/assets/images/pick-an-image-from-camera-roll.png)
+
+![Pick Image](/assets/images/pick-an-image-from-camera-roll.png)
 * When you have added enough images, select *"Process Photoscene"*
 
 
