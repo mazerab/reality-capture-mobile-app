@@ -195,7 +195,6 @@ export default class ImageScreen extends React.Component {
   };
 
   uploadAndTranslate = async () => {
-    //this.setState({ processing: true, processButtonDisabled: true });
     this.setState({ processButtonDisabled: true });
     this.DataService = new DataService();
     this.DerivativeService = new DerivativeService();
@@ -215,9 +214,9 @@ export default class ImageScreen extends React.Component {
           if (manifestStatus === 'success' && !this.manifestStatusIgnore && urn) {
             this.manifestStatusIgnore = true;
             console.info('INFO: setting urn: ' + urn);
-            const derivativeUrnResult = await this.DerivativeService.getDerivativeUrn();
-            console.info('derivativeUrnResult = ' + JSON.stringify(derivativeUrnResult));
-            if(derivativeUrnResult) {
+            const downloadURNsResult = await this.DerivativeService.downloadBubbles();
+            console.info('downloadURNsResult = ' + JSON.stringify(downloadURNsResult));
+            if(downloadURNsResult) {
               const s3Url = 'https://s3.amazonaws.com/reality-capture-images/result.obj.svf';
               this.setState({ urn: urn, s3Svf: s3Url, viewFileButtonDisabled: false });
               clearInterval(this.state.processTranslationIntervalId);
