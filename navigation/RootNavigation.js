@@ -3,7 +3,7 @@ import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
-import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
+import PushNotificationService from '../api/PushNotificationService';
 
 const RootStackNavigator = StackNavigator(
   {
@@ -38,7 +38,8 @@ export default class RootNavigator extends React.Component {
     // You can comment the following line out if you want to stop receiving
     // a notification every time you open the app. Check out the source
     // for this function in api/registerForPushNotificationsAsync.js
-    registerForPushNotificationsAsync();
+    this.PushNotificationService = new PushNotificationService();
+    this.PushNotificationService.registerForPushNotificationsAsync();
 
     // Watch for incoming notifications
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
