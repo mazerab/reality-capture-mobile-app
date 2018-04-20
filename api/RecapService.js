@@ -9,6 +9,28 @@ export default class RecapService {
         this.utils = new Utils();
     }
 
+    async getPhotoSceneLink() {
+        const endpoint = Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT + '/redis/photoscenelink';
+        const api = '/demo/redis/photoscenelink';
+        this.utils.logRequestInfoToConsole(api, 'GET', endpoint, null);
+        return fetch(endpoint, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then((res) => {
+                this.utils.logResponseInfoToConsole(api, 'POST', res);
+                if (res.ok) {
+                    return res.json();
+                } else {
+                    this.utils.logResponseErrorToConsole('Failed to get photoscenelink!', res);
+                    alert('Failed to get photoscenelink!');
+                }
+            })
+            .catch((err) => {
+                this.utils.logFetchErrorToConsole(err);
+            });
+    }
+
     async pollProcessingStatus() {
         const endpoint = Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT + '/redis/processingstatus';
         const api = '/demo/redis/processingstatus';
