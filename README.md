@@ -22,6 +22,7 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 
 1. You must have a valid AWS account
 1. You have to create a new public-read S3 bucket, and apply the policy found in this [JSON](https://github.com/mazerab/reality-capture-mobile-app/blob/master/s3-policy.json) file. Before you apply the policy, edit the JSON to specify your bucket name and save the change.
+1. You must have created a new Forge App. 
 1. Deploy new AWS lambda function to run [reality-capture-backend-app](https://github.com/mazerab/reality-capture-backend-app). 
 1. Deploy new AWS lambda function to run [obj-upload-translate-app](https://github.com/mazerab/obj-upload-translate-app).
 1. Follow the READMEs found in these two repositories to learn how to setup and deploy the AWS lambda functions.
