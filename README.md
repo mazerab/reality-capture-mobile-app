@@ -20,10 +20,12 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 1. Deploy new AWS lambda function to run [reality-capture-backend-app](https://github.com/mazerab/reality-capture-backend-app). 
 1. Deploy new AWS lambda function to run [obj-upload-translate-app](https://github.com/mazerab/obj-upload-translate-app).
 1. Follow the READMEs found in these two repositories to learn how to setup and deploy the AWS lambda functions.
+*On your local development machine*
 1. Install the Expo local development tool XDE by navigating to this [link](https://docs.expo.io/versions/latest/introduction/installation.html).
 1. Download the client app source code from this [url](https://github.com/mazerab/reality-capture-mobile-app/archive/master.zip)
 1. Extract the client app source code to a new directory on your development machine
 1. Open a terminal and navigate to the new directory
-1. Run the command **npm install**
+1. Run the command **npm install** to install the dependencies
+
 
 
