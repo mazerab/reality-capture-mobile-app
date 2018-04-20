@@ -27,6 +27,8 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 * Deploy new AWS lambda function to run [obj-upload-translate-app](https://github.com/mazerab/obj-upload-translate-app).
 * Follow the READMEs found in these two repositories to learn how to setup and deploy the AWS lambda functions.
 
+### Setup 
+
 *On your local development machine*
 
 * Install the Expo local development tool XDE by navigating to this [link](https://docs.expo.io/versions/latest/introduction/installation.html).
@@ -69,6 +71,10 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 * Click on View File button to launch the Forge Viewer
 
 ![Forge Viewer](/assets/images/forge-viewer.png)
+
+### What's next
+
+One of the reasons for using Expo and XDE was it's feature to 'Publish your app'. This gives you a *very* convenient way to let others try out your new app on their own phone. It delays the decision to buy an Apple Developer Account, MacBook, install Xcode, build and deploy. Just share the QRCode, like the one I posted in the title of this blog, and away you go!
 
 
 
