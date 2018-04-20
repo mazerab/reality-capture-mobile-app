@@ -38,8 +38,8 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 * Edit the variables FORGE_APP_ID, AWS_RECAP_LAMBDA_BASE_ENDPOINT, AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT and AWS_S3_BUCKET to reflect your environment
 * Save the changes
 * Launch the Expo XDE Client to open project and browse to your app root directory
-  <img src="/assets/images/expo-open-project.png" width="48" height="48">
-  ![Open Expo Project](/assets/images/expo-open-project.png)
+
+  <img src="/assets/images/expo-open-project.png" width="200" height="200">
 * Open the iOS Simulator to start the app
   ![Open iOS Simulator](/assets/images/open-ios-simulator.png)
 * In the iOS Simulator, you will be prompted to use *"expo.io"* to Sign In, choose **Continue**
