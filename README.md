@@ -72,7 +72,7 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 
 ![Forge Viewer](/assets/images/forge-viewer.png)
 
-### What's next
+# What's next
 
 One of the reasons for using Expo and XDE was it's feature to 'Publish your app'. This gives you a *very* convenient way to let others try out your new app on their own phone. It delays the decision to buy an Apple Developer Account, MacBook, install Xcode, build and deploy. Just share the QRCode, like the one I posted at the beginning of this README, and away you go!
 
