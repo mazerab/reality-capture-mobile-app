@@ -11,9 +11,12 @@ In this repository, we will walk through 'building a basic **React Native** app'
 
 ## Introduction
 
-I’ve been interested in React Native for a while, and have been wanting to use it to build a mobile app that uses the Forge Reality Capture API. To help building a mobile app that will work in both Android and iOS environments, I chose to use the **Expo XDE** client. Expo is a set of tools, libraries and services which let you build native iOS and Android apps by writing JavaScript. The current Expo documentation can be accessed [here](https://docs.expo.io/versions/v26.0.0/). 
+I’ve been interested in React Native for a while, and have been wanting to use it to build a mobile app that uses the Forge Reality Capture API. To help building a mobile app that will work in both Android and iOS environments, I chose to use the **Expo XDE** client. Expo is a set of tools, libraries and services which let you quickly build native iOS and Android apps by writing JavaScript. The current Expo documentation can be accessed [here](https://docs.expo.io/versions/v26.0.0/). 
+
+To interface with the camera roll of the smart phone, I reused code from [this](https://github.com/expo/image-upload-example) repository. 
 
 The biggest challenge here, is 'Authentication on mobile'. We want our phone to remember our login info, and not bother us again (until we uninstall or sign-out). A second challenge was how to port all the network related activities off the mobile app to a backend server app. Mobile phones can lose connectivity to the internet quite easily, it is therefore of interest to move all the network related tasks to a server infrastructure where we know the network will be reliable. For that task, I chose **Amazon AWS Lambda Functions**. AWS Lambda lets you run code without provisioning or managing servers, making it the perfect infrastructure to run the backend server app. Because AWS lambda functions have a 30 seconds timeout due to the API Gateway they rely on, I decided to break down the server app into two separate server apps (in other words two separate AWS lambda functions). 
+
 
 ### Pre-requisites
 
