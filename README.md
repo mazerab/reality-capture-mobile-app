@@ -20,70 +20,47 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 
 ### Pre-requisites
 
-1. You must have a valid AWS account
-1. You have to create a new public-read S3 bucket, and apply the policy found in this [JSON](https://github.com/mazerab/reality-capture-mobile-app/blob/master/s3-policy.json) file. Before you apply the policy, edit the JSON to specify your bucket name and save the change.
-1. You must have created a new Forge App. 
-1. Deploy new AWS lambda function to run [reality-capture-backend-app](https://github.com/mazerab/reality-capture-backend-app). 
-1. Deploy new AWS lambda function to run [obj-upload-translate-app](https://github.com/mazerab/obj-upload-translate-app).
-1. Follow the READMEs found in these two repositories to learn how to setup and deploy the AWS lambda functions.
+* You must have a valid AWS account
+* You have to create a new public-read S3 bucket, and apply the policy found in this [JSON](https://github.com/mazerab/reality-capture-mobile-app/blob/master/s3-policy.json) file. Before you apply the policy, edit the JSON to specify your bucket name and save the change.
+* You must have created a new Forge App. 
+* Deploy new AWS lambda function to run [reality-capture-backend-app](https://github.com/mazerab/reality-capture-backend-app). 
+* Deploy new AWS lambda function to run [obj-upload-translate-app](https://github.com/mazerab/obj-upload-translate-app).
+* Follow the READMEs found in these two repositories to learn how to setup and deploy the AWS lambda functions.
 
 *On your local development machine*
 
-1. Install the Expo local development tool XDE by navigating to this [link](https://docs.expo.io/versions/latest/introduction/installation.html).
-1. Download the client app source code from this [url](https://github.com/mazerab/reality-capture-mobile-app/archive/master.zip)
-1. Extract the client app source code to a new directory on your development machine
-1. Open a terminal and navigate to the new directory
-1. Run the command **npm install** to install the dependencies. If successful, you will notice a new sub-directory called node_modules in the root of your app directory.
-1. Using your favorite text editor, open the file ./constants/Config.js
-1. Edit the variables FORGE_APP_ID, AWS_RECAP_LAMBDA_BASE_ENDPOINT, AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT and AWS_S3_BUCKET to reflect your environment
-1. Save the changes
-1. Launch the Expo XDE Client to open project and browse to your app root directory
-
+* Install the Expo local development tool XDE by navigating to this [link](https://docs.expo.io/versions/latest/introduction/installation.html).
+* Download the client app source code from this [url](https://github.com/mazerab/reality-capture-mobile-app/archive/master.zip)
+* Extract the client app source code to a new directory on your development machine
+* Open a terminal and navigate to the new directory
+* Run the command **npm install** to install the dependencies. If successful, you will notice a new sub-directory called node_modules in the root of your app directory.
+* Using your favorite text editor, open the file ./constants/Config.js
+* Edit the variables FORGE_APP_ID, AWS_RECAP_LAMBDA_BASE_ENDPOINT, AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT and AWS_S3_BUCKET to reflect your environment
+* Save the changes
+* Launch the Expo XDE Client to open project and browse to your app root directory
   ![Open Expo Project](/assets/images/expo-open-project.png)
-
-1. Open the iOS Simulator to start the app
-
+* Open the iOS Simulator to start the app
   ![Open iOS Simulator](/assets/images/open-ios-simulator.png)
-
-1. In the iOS Simulator, you will be prompted to use *"expo.io"* to Sign In, choose **Continue**
-
+* In the iOS Simulator, you will be prompted to use *"expo.io"* to Sign In, choose **Continue**
   ![Continue](/assets/images/expo-io-sign-in.png)
-  
-1. Next prompt will ask you to sign into another service, choose **Yes**
-
+* Next prompt will ask you to sign into another service, choose **Yes**
   ![Continue](/assets/images/sign-in-to-another-service.png)
-
-1. You will then be redirected to the sign in page of Autodesk, you will get a 400 invalid redirect_uri error
-
-  ![Sign In Error](/assets/images/400-invalid-redirect-uri.png)
-  
-1. Go back to the Expo XDE Client and look for a message stating *"Copy this redirect url to the Forge app callback ..."*
-
+* You will then be redirected to the sign in page of Autodesk, you will get a 400 invalid redirect_uri error
+  ![Sign In Error](/assets/images/400-invalid-redirect-uri.png) 
+* Go back to the Expo XDE Client and look for a message stating *"Copy this redirect url to the Forge app callback ..."*
   ![Redirect URL](/assets/images/redirect-url.png)
-
-1. Copy the URL
-
-1. Edit your Forge App and change the callback URL to the URL you just copied
-
+* Copy the URL
+* Edit your Forge App and change the callback URL to the URL you just copied
   ![Forge Callback URL](/assets/images/callback-url.png)
-
-1. Save the changes in your Forge app
-
-1. Restart the project in Expo and this time you will be redirected to the Autodesk Sign-In page
-
-1. Login with your Autodesk ID
-
+* Save the changes in your Forge app
+* Restart the project in Expo and this time you will be redirected to the Autodesk Sign-In page
+* Login with your Autodesk ID
   ![Autodesk Login](/assets/images/adsk-sign-in.png)
-
-1. You will see the main screen, select *"Pick an image from camera roll"* to select your first image
-
+* You will see the main screen, select *"Pick an image from camera roll"* to select your first image
   ![Main Screen](/assets/images/main-app-screen.png)
-
-1. Repeat the process by adding two or more images
-
+* Repeat the process by adding two or more images
   ![Pick Image](/assets/images/pick-an-image-from-camera-roll.png)
-
-1. When you have added enough images, select *"Process Photoscene"*
+* When you have added enough images, select *"Process Photoscene"*
 
 
 
