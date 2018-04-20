@@ -64,6 +64,7 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 * When you have added enough images, select *"Process Photoscene"*
 * When the photoscene is fully processed, the View File button becomes available
 * Click on View File button to launch the Forge Viewer
+
 ![Forge Viewer](/assets/images/forge-viewer.png)
 
 
