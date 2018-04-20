@@ -1,6 +1,8 @@
 import React from 'react';
 import {Dimensions, StyleSheet, View, WebView} from 'react-native';
 
+import Config from '../constants/Config';
+
 let width = Dimensions.get('window').width;
 
 class ForgeViewer extends React.Component {
@@ -13,8 +15,7 @@ class ForgeViewer extends React.Component {
     }
 
     componentDidMount() {
-        //const svfURL = 'https://lmv-models.s3.amazonaws.com/lmv_rocks/gears/output/1/0/1/Storyboard1.svf';
-        const svfURL = 'https://s3.amazonaws.com/reality-capture-images/result.svf';
+        const svfURL = Config.AWS_S3_BASE_ENDPOINT + '/' + Config.AWS_S3_BUCKET + '/result.obj.svf';
         const HTML = `
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -30,6 +31,9 @@ class ForgeViewer extends React.Component {
                 function onSuccess() {
                     viewer.setBackgroundColor(100,100,100,255,255,255);
                 };
+                function onError(viewerErrorCode, message) {
+                    alert(message);
+                }
                 function initializeViewer() {
                     var viewerDiv = document.querySelector('#forgeViewer');
                     viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerDiv, {});
@@ -38,19 +42,13 @@ class ForgeViewer extends React.Component {
                         useConsolidation: false,
                         useADP: false,
                     };
-                    Autodesk.Viewing.Initializer( options, function() {
-                        viewer.start(\`${svfURL}\`, options, onSuccess);            
+                    Autodesk.Viewing.Initializer(options, function() {
+                        //var modelOptions = { sharedPropertyDbPath: doc.getPropertyDbPath() } ;
+                        //var dbPropertiesPath = 'urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6cmVhbGl0eS1jYXB0dXJlLW91dHB1dC9yZXN1bHQub2Jq/output/properties.db';
+                        viewer.start(\`${svfURL}\`, {}, onSuccess, onError);            
                     });
                 };
                 initializeViewer();
-                function saveState(){
-                    states.push(viewer.getState());
-                };
-                var count=0;
-                function restoreState(){
-                    viewer.restoreState(states[count]);
-                    count++;
-                }
             </script>
         `;
         this.setState({ htmlTemplate: HTML});
