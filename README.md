@@ -17,6 +17,11 @@ To interface with the camera roll of the smart phone, I reused code from [this](
 
 The biggest challenge here, is 'Authentication on mobile'. We want our phone to remember our login info, and not bother us again (until we uninstall or sign-out). A second challenge was how to port all the network related activities off the mobile app to a backend server app. Mobile phones can lose connectivity to the internet quite easily, it is therefore of interest to move all the network related tasks to a server infrastructure where we know the network will be reliable. For that task, I chose **Amazon AWS Lambda Functions**. AWS Lambda lets you run code without provisioning or managing servers, making it the perfect infrastructure to run the backend server app. Because AWS lambda functions have a 30 seconds timeout due to the API Gateway they rely on, I decided to break down the server app into two separate server apps (in other words two separate AWS lambda functions). 
 
+### Trying it out!
+
+You can pretest the mobile app by scanning the below QR code on your smartphone after installing Expo.
+
+![QR Code](/assets/images/app-qr-code.png)
 
 ### Pre-requisites
 
