@@ -7,6 +7,8 @@ In this repository, We will walk through 'building a basic React Native app' tha
 
 - [x] - Part 2 will focus on creating a Reality Capture backend app running on AWS lambda function that creates a photoscene, upload images to it and process the photoscene
 
+        The github repository can be accessed [here](https://github.com/mazerab/reality-capture-backend-app).
+
 - [x] - Part 3 will focus on creating another AWS lambda function that will be responsible for translating the OBJ output file to SVF format that the Forge Viewer can open
 
-
+        The github repository can be accessed [here](https://github.com/mazerab/obj-upload-translate-app).
