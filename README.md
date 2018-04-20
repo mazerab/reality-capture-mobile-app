@@ -32,7 +32,7 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 * Install the Expo local development tool XDE by navigating to this [link](https://docs.expo.io/versions/latest/introduction/installation.html).
 * Download the client app source code from this [url](https://github.com/mazerab/reality-capture-mobile-app/archive/master.zip)
 * Extract the client app source code to a new directory on your development machine
-* Open a terminal and navigate to the new directory
+* Open a terminal and navigate to the new repository directory
 * Run the command **npm install** to install the dependencies. If successful, you will notice a new sub-directory called node_modules in the root of your app directory.
 * Using your favorite text editor, open the file **./constants/Config.js**
 * Edit the variables **FORGE_APP_ID**, **AWS_RECAP_LAMBDA_BASE_ENDPOINT**, **AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT** and **AWS_S3_BUCKET** to reflect your environment
