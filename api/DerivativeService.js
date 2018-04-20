@@ -9,9 +9,9 @@ export default class DerivativeService {
         this.utils = new Utils();
     }
 
-    async getDerivativeUrn() {
-        const endpoint = Config.AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT + '/derivative/getDerivativeUrn';
-        const api = '/demo/derivative/getDerivativeUrn';
+    async downloadBubbles() {
+        const endpoint = Config.AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT + '/derivative/downloadBubbles';
+        const api = '/demo/derivative/downloadBubbles';
         this.utils.logRequestInfoToConsole(api, 'GET', endpoint, null);
         return fetch(endpoint, {
             method: 'GET',
@@ -22,8 +22,8 @@ export default class DerivativeService {
                 if (res.ok) {
                     return res.json();
                 } else {
-                    this.utils.logResponseErrorToConsole('Failed to get derivative urn!', res);
-                    alert('Failed to get derivative urn!');
+                    this.utils.logResponseErrorToConsole('Failed to download bubbles!' + JSON.stringify(res));
+                    alert('Failed to download bubbles!');
                 }
             })
             .catch((err) => {
