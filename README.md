@@ -29,7 +29,7 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 1. Open a terminal and navigate to the new directory
 1. Run the command **npm install** to install the dependencies. If successful, you will notice a new sub-directory called node_modules in the root of your app directory.
 1. Launch the Expo XDE Client to open project and browse to your app root directory
-  ![Open Expo Project](/images/logo.png)
+  ![Open Expo Project](/assets/images/expo-open-project.png)
 1. 
 
 
