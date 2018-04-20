@@ -42,5 +42,5 @@ export default class AWSS3Service {
             xhr.send(photo);
         });
     }
-    
+
 }
