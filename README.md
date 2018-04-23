@@ -27,7 +27,7 @@ You can pretest the mobile app by scanning the below QR code on your smartphone 
 
 * You must have a valid AWS account
 * You have to create a new public-read S3 bucket, and apply the policy found in this [JSON](https://github.com/mazerab/reality-capture-mobile-app/blob/master/s3-policy.json) file. Before you apply the policy, edit the JSON to specify your bucket name and save the change.
-* You must have created a new Forge App. 
+* You must have created a new Forge App. Step by step instructions found [here](https://developer.autodesk.com/en/docs/oauth/v2/tutorials/create-app/).
 * Deploy new AWS lambda function to run [reality-capture-backend-app](https://github.com/mazerab/reality-capture-backend-app). 
 * Deploy new AWS lambda function to run [obj-upload-translate-app](https://github.com/mazerab/obj-upload-translate-app).
 * Follow the READMEs found in these two repositories to learn how to setup and deploy the AWS lambda functions.
