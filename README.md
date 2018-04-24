@@ -23,6 +23,8 @@ You can pretest the mobile app by scanning the below QR code on your smartphone 
 
 ![QR Code](/assets/images/app-qr-code.png)
 
+If you need sample images, please go to this [directory](/assets/sample).
+
 ### Pre-requisites
 
 * You must have a valid AWS account
