@@ -1,10 +1,13 @@
+import React from 'react';
 import { Constants, Permissions, Notifications } from 'expo';
 
 import Config from '../constants/Config';
 
-export default class PushNotificationService {
+export default class PushNotificationService extends React.Component {
 
-  constructor() { }
+  constructor(props) { 
+    super(props);
+  }
 
   async registerForPushNotificationsAsync() {
     const PUSH_ENDPOINT = Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT + '/expo/tokens';
@@ -38,5 +41,3 @@ export default class PushNotificationService {
   }
 
 }
-
-
