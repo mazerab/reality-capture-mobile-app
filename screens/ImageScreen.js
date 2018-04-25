@@ -98,6 +98,7 @@ export default class ImageScreen extends React.Component {
       }
       if (!pickerResult.cancelled) {
         const imageInfo = await FileSystem.getInfoAsync(pickerResult.uri);
+        console.info('INFO: File to upload info: ' + JSON.stringify(imageInfo));
         const uploadResult = await this.AWSS3Service.uploadImageToS3BucketAsync(pickerResult.uri, imageInfo.size);
         console.info('INFO: Upload to S3 Response: ' + JSON.stringify(uploadResult));
         if(uploadResult) {
@@ -140,7 +141,8 @@ export default class ImageScreen extends React.Component {
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: 'Images',
       allowsEditing: true,
-      aspect: [4, 3]
+      aspect: [4, 3],
+      quality: 1
     });
     this.handleImagePicked(pickerResult);
   };
@@ -151,7 +153,7 @@ export default class ImageScreen extends React.Component {
     const processingStatusResult = await this.RecapService.setProcessingStatusInProgress();
     const processResult = await this.RecapService.processPhotoScene();
     if (processResult) {
-      if (Config.IOS_SIMULATOR_TESTING) { // iOS simulator does not support push notifications
+      if (Config.PUSH_NOTIFICATION_DISABLED) { // iOS simulator does not support push notifications
         const intervalId = setInterval(async () => {
           if(this.state.processing) {
             const progressResult = await this.RecapService.pollProcessingStatus();
