@@ -1,11 +1,14 @@
 'use strict';
 
+import React from 'react';
+
 import Config from '../constants/Config';
 import Utils from './Utils';
 
-export default class RecapService {
+export default class RecapService extends React.Component {
 
-    constructor() {
+    constructor(props) {
+        super(props);
         this.utils = new Utils();
     }
 
