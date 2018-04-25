@@ -1,19 +1,21 @@
 'use strict';
 
+import React from 'react';
 import { AsyncStorage } from 'react-native';
 import { AuthSession } from 'expo';
 
 import Config from '../constants/Config';
 
-export default class OAuthForge {
+export default class OAuthForge extends React.Component {
 
-    constructor() {
+    constructor(props) {
+        super(props);
         AsyncStorage.getItem('accessToken').then( (res) => { this.token = res; });
     }
 
     initToken() {
         this.login().then( (result) => {
-            this.token = (result && result.type == 'success') ? result.params.access_token : "";
+            this.token = (result && result.type == 'success') ? result.params.access_token : '';
             AsyncStorage.setItem('@accessToken', this.token);
             console.info('INFO: Login: accessToken: ' + this.token);
         });
