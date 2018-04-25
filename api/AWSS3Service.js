@@ -1,12 +1,15 @@
 'use strict';
 
+import React from 'react';
 import PathParse from 'path-parse';
 
 import Config from '../constants/Config';
 
-export default class AWSS3Service {
+export default class AWSS3Service extends React.Component {
 
-    constructor() { }
+    constructor(props) {
+        super(props);
+    }
 
     async uploadImageToS3BucketAsync(imageFileUri, fileSize) {
         const fileName = PathParse(imageFileUri).base;
