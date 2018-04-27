@@ -70,7 +70,7 @@ If you need sample images, please go to this [directory](/assets/sample).
   ![Autodesk Login](/assets/images/adsk-sign-in.png)
 * You will see the main screen, select *"Pick an image from camera roll"* to select your first image
   ![Main Screen](/assets/images/main-app-screen.png)
-* Repeat the process by adding two or more images
+* Repeat the process by adding three or more images (**Note**: the order in which you add the images does not matter)
 
 ![Pick Image](/assets/images/pick-an-image-from-camera-roll.png)
 * When you have added enough images, select *"Process Photoscene"*
