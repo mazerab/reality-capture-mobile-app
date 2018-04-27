@@ -72,12 +72,12 @@ If you need sample images, please go to this [directory](/assets/sample).
   ![Main Screen](/assets/images/main-app-screen.png)
 * Repeat the process by adding three or more images (**Note**: the order in which you add the images does not matter)
 
-![Pick Image](/assets/images/pick-an-image-from-camera-roll.png)
+  ![Pick Image](/assets/images/pick-an-image-from-camera-roll.png)
 * When you have added enough images, select *"Process Photoscene"*
 * When the photoscene is fully processed, the View File button becomes available
 * Click on View File button to launch the Forge Viewer
 
-![Forge Viewer](/assets/images/lmv-viewer.png)
+  ![Forge Viewer](/assets/images/lmv-viewer.png)
 
 # What's next
 
