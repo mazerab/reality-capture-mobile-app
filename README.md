@@ -48,7 +48,7 @@ If you need sample images, please go to this [directory](/assets/sample).
 * Save the changes
 * Launch the Expo XDE Client to open project and browse to your app root directory
 
-  <img src="/assets/images/expo-open-project.png" width="550" height="400">
+  <img src="/assets/images/expo-open-project.png" width="450" height="300">
 * Open the iOS Simulator to start the app
 
   <img src="/assets/images/open-ios-simulator.png" width="200" height="150">
