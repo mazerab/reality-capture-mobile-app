@@ -67,7 +67,7 @@ If you need sample images, please go to this [directory](/assets/sample).
 * Save the changes in your Forge app
 * Restart the project in Expo and this time you will be redirected to the Autodesk Sign-In page
 * Login with your Autodesk ID
-  ![Autodesk Login](/assets/images/adsk-sign-in.png)
+  <img src="/assets/images/adsk-sign-in.png" width="250" height="250">
 * You will see the main screen, select *"Pick an image from camera roll"* to select your first image
   ![Main Screen](/assets/images/main-app-screen.png)
 * Repeat the process by adding three or more images (**Note**: the order in which you add the images does not matter)
