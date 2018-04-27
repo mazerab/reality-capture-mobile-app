@@ -63,7 +63,7 @@ If you need sample images, please go to this [directory](/assets/sample).
   <img src="/assets/images/redirect-url.png" width="600" height="100">
 * Copy the URL
 * Edit your Forge App and change the callback URL to the URL you just copied
-  <img src="/assets/images/callback-url.png" width="300" height="250">
+  <img src="/assets/images/callback-url.png" width="350" height="250">
 * Save the changes in your Forge app
 * Restart the project in Expo and this time you will be redirected to the Autodesk Sign-In page
 * Login with your Autodesk ID
