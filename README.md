@@ -58,9 +58,9 @@ If you need sample images, please go to this [directory](/assets/sample).
 
   ![Continue](/assets/images/sign-in-to-another-service.png)
 * You will then be redirected to the sign in page of Autodesk, you will get a 400 invalid redirect_uri error
-  <img src="/assets/images/400-invalid-redirect-uri.png" width="200" height="250">
+  <img src="/assets/images/400-invalid-redirect-uri.png" width="250" height="250">
 * Go back to the Expo XDE Client and look for a message stating *"Copy this redirect url to the Forge app callback ..."*
-  ![Redirect URL](/assets/images/redirect-url.png)
+  <img src="/assets/images/redirect-url.png" width="250" height="250">
 * Copy the URL
 * Edit your Forge App and change the callback URL to the URL you just copied
   ![Forge Callback URL](/assets/images/callback-url.png)
