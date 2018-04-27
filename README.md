@@ -83,6 +83,8 @@ If you need sample images, please go to this [directory](/assets/sample).
 
 One of the reasons for using Expo and XDE was its feature to **'Publish your app'**. This gives you a *very* convenient way to let others try out your new app on their own phone. It delays the decision to buy an Apple Developer Account, MacBook, install Xcode, build and deploy. Just share the QRCode, like the one I posted at the beginning of this README, and away you go!
 
+And if you want to develop an app for the web, please make sure you read [The Hitchhiker's Guide to ... Reality Capture API](https://forge.autodesk.com/blog/hitchhikers-guide-reality-capture-api).
+
 
 
 
