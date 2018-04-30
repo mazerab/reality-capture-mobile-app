@@ -256,7 +256,7 @@ export default class ImageScreen extends React.Component {
             const downloadURNsResult = await downloadBubbles();
             console.info('downloadURNsResult = ' + JSON.stringify(downloadURNsResult));
             if(downloadURNsResult) {
-              const s3Url = `${Config.AWS_S3_BASE_ENDPOINT}/${AWS_S3_BUCKET}/result.obj.svf`;
+              const s3Url = `${Config.AWS_S3_BASE_ENDPOINT}/${Config.AWS_S3_BUCKET}/result.obj.svf`;
               this.setState({ urn: urn, s3Svf: s3Url, viewFileButtonDisabled: false });
               clearInterval(this.state.processTranslationIntervalId);
             }
