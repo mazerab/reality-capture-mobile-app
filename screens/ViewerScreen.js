@@ -15,7 +15,7 @@ class ForgeViewer extends React.Component {
     }
 
     componentDidMount() {
-        const svfURL = Config.AWS_S3_BASE_ENDPOINT + '/' + Config.AWS_S3_BUCKET + '/result.obj.svf';
+        const svfURL = `${Config.AWS_S3_BASE_ENDPOINT}/${Config.AWS_S3_BUCKET}/result.obj.svf`;
         const HTML = `
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
