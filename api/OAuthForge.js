@@ -17,7 +17,7 @@ export default class OAuthForge extends React.Component {
         this.login().then( (result) => {
             this.token = (result && result.type == 'success') ? result.params.access_token : '';
             AsyncStorage.setItem('@accessToken', this.token);
-            console.info('INFO: Login: accessToken: ' + this.token);
+            console.info(`INFO: Login: AuthToken: ${this.token}`);
         });
         return this.token;
     }
@@ -32,9 +32,9 @@ export default class OAuthForge extends React.Component {
     login() {
         if (this.token === undefined || this.token === null) {
             const redirectUrl = AuthSession.getRedirectUrl();
-            console.info('Copy this redirect url to the Forge app callback: ' + redirectUrl);
+            console.info(`Copy this redirect url to the Forge app callback: ${redirectUrl}`);
             let req = {
-                authUrl: Config.OAUTH_BASE_ENDPOINT + '/authorize?response_type=token&client_id=' + Config.FORGE_APP_ID + '&redirect_uri=' + encodeURIComponent(redirectUrl) + '&scope=' + Config.scopePublic.join('%20')
+                authUrl: `${Config.OAUTH_BASE_ENDPOINT}/authorize?response_type=token&client_id=${Config.FORGE_APP_ID}&redirect_uri=${encodeURIComponent(redirectUrl)}&scope=${Config.scopePublic.join('%20')}`
             };
             return AuthSession.startAsync(req);
         }
