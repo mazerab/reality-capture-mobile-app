@@ -1,18 +1,19 @@
 import React from 'react';
-import { ActivityIndicator, Button, Image, Share, StatusBar, StyleSheet, Text, View } from 'react-native';
-import Exponent, { Constants, FileSystem, ImagePicker, Notifications } from 'expo';
+import { ActivityIndicator, Button, Image, ImageBackground, Share, StatusBar, StyleSheet, Text, View } from 'react-native';
+import Exponent, { Constants, FileSystem, Font, ImagePicker, Notifications, Permissions } from 'expo';
 
 import Config from '../constants/Config';
 
-import PushNotificationService from '../api/PushNotificationService';
-import AWSS3Service from '../api/AWSS3Service';
-import DataService from '../api/DataService';
-import DerivativeService from '../api/DerivativeService';
+import {registerForPushNotificationsAsync} from '../api/PushNotificationService';
+import {uploadImageToS3BucketAsync} from '../api/AWSS3Service';
+import {uploadAndTranslateProcessedData} from '../api/DataService';
+import {downloadBubbles, getManifest} from '../api/DerivativeService';
+import ErrorBoundary from '../api/ErrorBoundary';
 import OAuthForge from '../api/OAuthForge';
 import ProcessingScreen from './ProcessingScreen';
 import Utils from '../api/Utils';
-import RecapService from '../api/RecapService';
-import RedisService from '../api/RedisService';
+import {getPhotoSceneLink, pollProcessingStatus, processPhotoScene, setProcessingStatusInProgress} from '../api/RecapService';
+import {initBackend, pushS3Url} from '../api/RedisService';
 
 let mTabNav;
 
@@ -24,9 +25,11 @@ export default class ImageScreen extends React.Component {
     super(props);
     this.uploading = false;
     this.state = {
+        fontLoaded: false,
         image: null,
+        imageCount: 0,
         notification: {},
-        processButtonDisabled: false,
+        processButtonDisabled: true,
         processing: false,
         processingDone: false,
         processingError: false,
@@ -38,18 +41,18 @@ export default class ImageScreen extends React.Component {
     this.OAuthForge = new OAuthForge();
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     console.info('INFO: Entering componentDidMount...');
-    // Initialize AWS S3 service
-    this.AWSS3Service = new AWSS3Service();
+    await Font.loadAsync({
+      'artifakt-element-regular': require('../assets/fonts/ArtifaktElementOfc-Regular.ttf')
+    });
+    this.setState({ fontLoaded: true });
     // Login to Forge using 3-legged oAuth
     this.OAuthForge.initToken();
     // Initialize Redis database
-    this.RedisService = new RedisService();
-    this.RedisService.initBackend();
+    initBackend();
     // Push notifications
-    this.PushNotificationService = new PushNotificationService();
-    this.PushNotificationService.registerForPushNotificationsAsync();
+    registerForPushNotificationsAsync();
     // Handle notifications that are received or selected while the app
     // is open. If the app was closed and then opened by tapping the
     // notification (rather than just tapping the app icon to open it),
@@ -77,18 +80,49 @@ export default class ImageScreen extends React.Component {
     return(
       <View style={{ flex:1, alignItems: 'center', justifyContent: 'center'}}>
         <ProcessingScreen processing={this.state.processing} />
-        <Text style={{ fontSize: 20, marginBottom: 20, textAlign: 'center', marginHorizontal: 15 }}>Reality Capture App</Text>
+        {
+          this.state.fontLoaded ? (
+            <Text style={{ fontFamily: 'artifakt-element-regular', fontSize: 20, marginBottom: 20, textAlign: 'center', marginHorizontal: 15 }}>Reality Capture App</Text>
+          ) : null
+        }
         <Button onPress={ this.pickImage } title='Pick an image from camera roll' />
         <Button onPress={ this.takePhoto } title='Take a photo' />
         {this.maybeRenderImage()}
         {this.maybeRenderImageUploadingOverlay()}
         <StatusBar barStyle="default" />
-        <Button onPress={ this.processPhotoScene } title='Process Photoscene' disabled={this.state.processButtonDisabled} />
-        <Button title='View File' disabled={this.state.viewFileButtonDisabled} onPress={ () => {
-          mTabNav.navigate('ForgeViewer', { urn: this.state.urn, token: this.OAuthForge.getToken() })
-        }} />
+        <ErrorBoundary>
+          <Button onPress={ this.processScene } title='Process Photoscene' disabled={this.state.processButtonDisabled} />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Button title='View File' disabled={this.state.viewFileButtonDisabled} onPress={ () => {
+            mTabNav.navigate('ForgeViewer', { urn: this.state.urn, token: this.OAuthForge.getToken() })
+          }} />  
+        </ErrorBoundary>
       </View>
     );
+  };
+
+  askPermissionsAsync = async () => {
+    const existingCameraStatus = await Permissions.getAsync(Permissions.CAMERA);
+    const existingCameraRollStatus = await Permissions.getAsync(Permissions.CAMERA_ROLL);
+    let finalCameraStatus = existingCameraStatus.status;
+    let finalCameraRollStatus = existingCameraRollStatus.status; 
+    // only ask if permissions have not already been determined, because
+    // iOS won't necessarily prompt the user a second time.
+    if(existingCameraStatus.status !== 'granted') {
+      // Android remote notification permissions are granted during the app
+      // install, so this will only ask on iOS
+      const { status } = await Permissions.askAsync(Permissions.CAMERA);
+      finalCameraStatus = status;
+    }
+    if(existingCameraRollStatus.status !== 'granted') {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      finalCameraRollStatus = status;
+    }
+    if(finalCameraStatus !== 'granted' || finalCameraRollStatus !== 'granted') {
+      return;
+    }
+    return { 'cameraStatus': finalCameraStatus, 'cameraRollStatus': finalCameraRollStatus}
   };
 
   handleImagePicked = async pickerResult => {
@@ -98,12 +132,15 @@ export default class ImageScreen extends React.Component {
       }
       if (!pickerResult.cancelled) {
         const imageInfo = await FileSystem.getInfoAsync(pickerResult.uri);
-        console.info('INFO: File to upload info: ' + JSON.stringify(imageInfo));
-        const uploadResult = await this.AWSS3Service.uploadImageToS3BucketAsync(pickerResult.uri, imageInfo.size);
-        console.info('INFO: Upload to S3 Response: ' + JSON.stringify(uploadResult));
+        console.info(`INFO: File to upload info: ${JSON.stringify(imageInfo)}`);
+        const uploadResult = await uploadImageToS3BucketAsync(pickerResult.uri);
+        console.info(`INFO: Upload to S3 Response: ${JSON.stringify(uploadResult)}`);
         if(uploadResult) {
-          this.setState({ image: uploadResult.s3Url });
-          const pushS3UrlResult = await this.RedisService.pushS3Url(uploadResult.s3Url);
+          this.setState({ image: uploadResult.s3Url, imageCount: this.state.imageCount + 1  });
+          if (this.state.imageCount > 2) { // can only send a photoscene for processing if more than 3 images have been added
+            this.setState({ processButtonDisabled: false });
+          }
+          const pushS3UrlResult = await pushS3Url(uploadResult.s3Url);
         }
       }
     } catch (e) {
@@ -138,26 +175,28 @@ export default class ImageScreen extends React.Component {
   };
 
   pickImage = async() => {
-    const pickerResult = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: 'Images',
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1
-    });
-    this.handleImagePicked(pickerResult);
+    const permStatuses = await this.askPermissionsAsync();
+    if(permStatuses) {
+      const pickerResult = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: 'Images',
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1
+      });
+      this.handleImagePicked(pickerResult);
+    }
   };
 
-  processPhotoScene = async() => {
+  processScene = async() => {
     this.setState({ processing: true });
-    this.RecapService = new RecapService();
-    const processingStatusResult = await this.RecapService.setProcessingStatusInProgress();
-    const processResult = await this.RecapService.processPhotoScene();
+    const processingStatusResult = await setProcessingStatusInProgress();
+    const processResult = await processPhotoScene();
     if (processResult) {
       if (Config.PUSH_NOTIFICATION_DISABLED) { // iOS simulator does not support push notifications
         const intervalId = setInterval(async () => {
           if(this.state.processing) {
-            const progressResult = await this.RecapService.pollProcessingStatus();
-            const photoscenelink = await this.RecapService.getPhotoSceneLink();
+            const progressResult = await pollProcessingStatus();
+            const photoscenelink = await getPhotoSceneLink();
             if( progressResult.processingstatus === 'Completed' 
               && !this.translateIgnore 
               && photoscenelink.photoscenelink !== 'blank') {
@@ -198,16 +237,14 @@ export default class ImageScreen extends React.Component {
 
   uploadAndTranslate = async () => {
     this.setState({ processButtonDisabled: true });
-    this.DataService = new DataService();
-    this.DerivativeService = new DerivativeService();
-    const uploadResult = await this.DataService.uploadAndTranslateProcessedData();
+    const uploadResult = await uploadAndTranslateProcessedData();
     if(uploadResult && uploadResult.statusCode === 200) { 
       let manifestStatus = 'notstarted';
       let urn;
       const intervalId = setInterval(async () => {
         if (this.state.viewFileButtonDisabled) {
           if (manifestStatus !== 'success') {
-            const manifestResult = await this.DerivativeService.getManifest();
+            const manifestResult = await getManifest();
             if(manifestResult) {
               manifestStatus = manifestResult.status;
               urn = manifestResult.urn;
@@ -216,10 +253,10 @@ export default class ImageScreen extends React.Component {
           if (manifestStatus === 'success' && !this.manifestStatusIgnore && urn) {
             this.manifestStatusIgnore = true;
             console.info('INFO: setting urn: ' + urn);
-            const downloadURNsResult = await this.DerivativeService.downloadBubbles();
+            const downloadURNsResult = await downloadBubbles();
             console.info('downloadURNsResult = ' + JSON.stringify(downloadURNsResult));
             if(downloadURNsResult) {
-              const s3Url = 'https://s3.amazonaws.com/reality-capture-images/result.obj.svf';
+              const s3Url = `${Config.AWS_S3_BASE_ENDPOINT}/${AWS_S3_BUCKET}/result.obj.svf`;
               this.setState({ urn: urn, s3Svf: s3Url, viewFileButtonDisabled: false });
               clearInterval(this.state.processTranslationIntervalId);
             }
