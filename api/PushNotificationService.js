@@ -1,19 +1,11 @@
-import React from 'react';
-import { Constants, Permissions, Notifications } from 'expo';
+'use strict';
 
+import { Constants, Permissions, Notifications } from 'expo';
 import Config from '../constants/Config';
 
-export default class PushNotificationService extends React.Component {
-
-  constructor(props) { 
-    super(props);
-  }
-
-  async registerForPushNotificationsAsync() {
-    const PUSH_ENDPOINT = Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT + '/expo/tokens';
-    const { status: existingStatus } = await Permissions.getAsync(
-      Permissions.NOTIFICATIONS
-    );
+export const registerForPushNotificationsAsync = async () => {
+    const PUSH_ENDPOINT = `${Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT}/expo/tokens`;
+    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
     let finalStatus = existingStatus;
     // only ask if permissions have not already been determined, because
     // iOS won't necessarily prompt the user a second time.
@@ -38,6 +30,4 @@ export default class PushNotificationService extends React.Component {
       },
       body: JSON.stringify({ 'pushToken': token })
     });
-  }
-
-}
+};
