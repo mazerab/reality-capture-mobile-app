@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Button, Image, ImageBackground, Share, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Button, Image, ImageBackground, Share, StatusBar, StyleSheet, Text, View } from 'react-native';
 import Exponent, { Constants, FileSystem, Font, ImagePicker, Notifications, Permissions } from 'expo';
 
 import Config from '../constants/Config';
@@ -144,8 +144,10 @@ export default class ImageScreen extends React.Component {
         }
       }
     } catch (e) {
-      console.error({ e });
-      alert('Upload failed, sorry!');
+      Alert.alert(
+        'Application Error',
+        'Upload failed, please try again!'
+      );
     } finally {
       this.setState({ uploading: false });
     }    
