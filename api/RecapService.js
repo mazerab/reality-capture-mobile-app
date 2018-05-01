@@ -1,7 +1,7 @@
 'use strict';
 
 import Config from '../constants/Config';
-import {logRequestInfoToConsole, logResponseInfoToConsole, logResponseErrorToConsole, logFetchErrorToConsole} from './Utils';
+import {logRequestInfoToConsole, logResponseInfoToConsole, logFetchErrorToConsole} from './Utils';
 
 export const getPhotoSceneLink = () => {
     const endpoint = `${Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT}/redis/photoscenelink`;
@@ -16,8 +16,7 @@ export const getPhotoSceneLink = () => {
             if (res.ok) {
                 return res.json();
             } else {
-                logResponseErrorToConsole('Failed to get photoscenelink!', res);
-                alert('Failed to get photoscenelink!');
+                throw Error('Failed to get photoscenelink!');
             }
         })
         .catch((err) => {
@@ -38,8 +37,7 @@ export const pollProcessingStatus = () => {
             if (res.ok) {
                 return res.json();
             } else {
-                logResponseErrorToConsole('Failed to set processing status!', res);
-                alert('Failed to set processing status!');
+                throw Error('Failed to get processing status!');
             }
         })
         .catch((err) => {
@@ -60,8 +58,7 @@ export const processPhotoScene = () => {
             if (res.ok) {
                 return res.json();
             } else {
-                logResponseErrorToConsole('Failed to process Photoscene!', res);
-                alert('Failed to process Photoscene!');
+                throw Error('Failed to process Photoscene!');
             }
         })
         .catch((err) => {
@@ -82,8 +79,7 @@ export const setProcessingStatusInProgress = () => {
             if (res.ok) {
                 return res.json();
             } else {
-                logResponseErrorToConsole('Failed to set processing status!', res);
-                alert('Failed to set processing status!');
+                throw Error('Failed to set processing status!');
             }
         })
         .catch((err) => {
