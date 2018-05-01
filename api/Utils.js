@@ -16,14 +16,6 @@ export const logResponseInfoToConsole = (endpoint, httpMethod, response) => {
     }  
 };
 
-export const logResponseErrorToConsole = (errMessage, response) => {
-    if(errMessage && response) {
-        console.error(`ERROR: ${errMessage}\n${JSON.stringify(response)}`);
-    } else {
-        console.error('ERROR: No error message returned!');
-    }
-};
-
 export const logFetchErrorToConsole = (error) => {
     if(error) {
         console.error(`ERROR: Fetch failed with error: ${error}`);
