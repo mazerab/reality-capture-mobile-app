@@ -1,7 +1,7 @@
 'use strict';
 
 import Config from '../constants/Config';
-import {logRequestInfoToConsole, logResponseInfoToConsole, logResponseErrorToConsole, logFetchErrorToConsole} from './Utils';
+import {logRequestInfoToConsole, logResponseInfoToConsole, logFetchErrorToConsole} from './Utils';
 
 export const initBackend = () => {
     const endpoint = `${Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT}/redis/initSessionState`;
@@ -15,8 +15,7 @@ export const initBackend = () => {
             if (res.ok) {
                 return res.json();
             } else {
-                logResponseErrorToConsole('Failed to initialize backend!', res);
-                alert('Failed to create initialize backend!');
+                throw Error('Failed to initialize backend!');
             }
         })
         .catch((err) => {
@@ -36,8 +35,7 @@ export const pushS3Url = (uri) => {
             if (res.ok) {
                 return res.json();
             } else {
-                logResponseErrorToConsole('Failed to initialize backend!', res);
-                alert('Failed to create initialize backend!');
+                throw Error('Failed to add image to the photoscene!');
             }
         })
         .catch((err) => {
