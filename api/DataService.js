@@ -1,7 +1,7 @@
 'use strict';
 
 import Config from '../constants/Config';
-import {logRequestInfoToConsole, logResponseInfoToConsole, logResponseErrorToConsole, logFetchErrorToConsole} from './Utils';
+import {logRequestInfoToConsole, logResponseInfoToConsole, logFetchErrorToConsole} from './Utils';
 
 export const uploadAndTranslateProcessedData = () => {
     const endpoint = `${Config.AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT}/data/uploadAndTranslate`;
@@ -16,11 +16,10 @@ export const uploadAndTranslateProcessedData = () => {
             if (res.ok) {
                 return res.json();
             } else {
-                logResponseErrorToConsole('Failed to upload processed data to Autodesk Cloud!', res);
-                alert('Failed to upload processed data to Autodesk Cloud!!');
+                throw Error('Failed to translate Photoscene geometry!');
             }
         })
         .catch((err) => {
             logFetchErrorToConsole(err);
-        });
+        }); 
 };
