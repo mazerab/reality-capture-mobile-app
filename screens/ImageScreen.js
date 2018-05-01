@@ -191,36 +191,48 @@ export default class ImageScreen extends React.Component {
 
   processScene = async() => {
     this.setState({ processing: true });
-    const processingStatusResult = await setProcessingStatusInProgress();
-    const processResult = await processPhotoScene();
-    if (processResult) {
-      if (Config.PUSH_NOTIFICATION_DISABLED) { // iOS simulator does not support push notifications
-        const intervalId = setInterval(async () => {
-          if(this.state.processing) {
-            const progressResult = await pollProcessingStatus();
-            const photoscenelink = await getPhotoSceneLink();
-            if( progressResult.processingstatus === 'Completed' 
-              && !this.translateIgnore 
-              && photoscenelink.photoscenelink !== 'blank') {
-              console.info('INFO: Processing is complete and photoscenelink is available to upload to Autodesk Cloud...')
-              this.translateIgnore = true;
-              this.setState({ processing: false });
-              clearInterval(this.state.processPhotosceneIntervalId);
-              this.uploadAndTranslate();
+    try {
+      const processingStatusResult = await setProcessingStatusInProgress();
+      const processResult = await processPhotoScene();
+      if (processResult) {
+        if (Config.PUSH_NOTIFICATION_DISABLED) { // iOS simulator does not support push notifications
+          const intervalId = setInterval(async () => {
+            if(this.state.processing) {
+              const progressResult = await pollProcessingStatus();
+              const photoscenelink = await getPhotoSceneLink();
+              if( progressResult.processingstatus === 'Completed' 
+                && !this.translateIgnore 
+                && photoscenelink.photoscenelink !== 'blank') {
+                console.info('INFO: Processing is complete and photoscenelink is available to upload to Autodesk Cloud...')
+                this.translateIgnore = true;
+                this.setState({ processing: false });
+                clearInterval(this.state.processPhotosceneIntervalId);
+                this.uploadAndTranslate();
+              }
             }
-          }
-        }, 1000);
-        this.setState({ processPhotosceneIntervalId: intervalId });
-      } else { // Push notifications
-        const intervalId = setInterval( async () => {
-          if(this.state.processing) {
-            if (this.state.notification.data && this.state.notification.data.Photoscene.scenelink !== 'blank') {
-              this.setState({ processing: false });
-              this.uploadAndTranslate();
+          }, 1000);
+          this.setState({ processPhotosceneIntervalId: intervalId });
+        } else { // Push notifications
+          const intervalId = setInterval( async () => {
+            if(this.state.processing) {
+              if (this.state.notification.data && this.state.notification.data.Photoscene.scenelink !== 'blank') {
+                this.setState({ processing: false });
+                this.uploadAndTranslate();
+              }
             }
-          }
-        }, 1000);
+          }, 1000);
+        }
       }
+    } catch (error) {
+      Alert.alert(
+        'Application Error',
+        `${error.message}`,
+        [
+          { text: 'Cancel', onPress: () => { console.info('Cancel pressed, please restart the app!'); }, style: 'cancel' },
+          { text: 'Retry', onPress: () => { initBackend(); } }
+        ],
+        { cancelable: false }
+      );
     }
   }
 
@@ -229,44 +241,59 @@ export default class ImageScreen extends React.Component {
   };
 
   takePhoto = async () => {
-    const pickerResult = await ImagePicker.launchCameraAsync({
-      mediaTypes: 'Images',
-      allowsEditing: true,
-      aspect: [4, 3]
-    });
-    this.handleImagePicked(pickerResult);
+    const permStatuses = await this.askPermissionsAsync();
+      if(permStatuses) {
+      const pickerResult = await ImagePicker.launchCameraAsync({
+        mediaTypes: 'Images',
+        allowsEditing: true,
+        aspect: [4, 3]
+      });
+      this.handleImagePicked(pickerResult);
+    }
   };
 
   uploadAndTranslate = async () => {
     this.setState({ processButtonDisabled: true });
-    const uploadResult = await uploadAndTranslateProcessedData();
-    if(uploadResult && uploadResult.statusCode === 200) { 
-      let manifestStatus = 'notstarted';
-      let urn;
-      const intervalId = setInterval(async () => {
-        if (this.state.viewFileButtonDisabled) {
-          if (manifestStatus !== 'success') {
-            const manifestResult = await getManifest();
-            if(manifestResult) {
-              manifestStatus = manifestResult.status;
-              urn = manifestResult.urn;
+    try {
+      const uploadResult = await uploadAndTranslateProcessedData();
+      console.info(`uploadResult: ${JSON.stringify(uploadResult)}`);
+      if(uploadResult && uploadResult.statusCode === 200) { 
+        let manifestStatus = 'notstarted';
+        let urn;
+        const intervalId = setInterval(async () => {
+          if (this.state.viewFileButtonDisabled) {
+            if (manifestStatus !== 'success') {
+              const manifestResult = await getManifest();
+              if(manifestResult) {
+                manifestStatus = manifestResult.status;
+                urn = manifestResult.urn;
+              }
+            }
+            if (manifestStatus === 'success' && !this.manifestStatusIgnore && urn) {
+              this.manifestStatusIgnore = true;
+              console.info('INFO: setting urn: ' + urn);
+              const downloadURNsResult = await downloadBubbles();
+              console.info('downloadURNsResult: ' + JSON.stringify(downloadURNsResult));
+              if(downloadURNsResult) {
+                const s3Url = `${Config.AWS_S3_BASE_ENDPOINT}/${Config.AWS_S3_BUCKET}/result.obj.svf`;
+                this.setState({ urn: urn, s3Svf: s3Url, viewFileButtonDisabled: false });
+                clearInterval(this.state.processTranslationIntervalId);
+              }
             }
           }
-          if (manifestStatus === 'success' && !this.manifestStatusIgnore && urn) {
-            this.manifestStatusIgnore = true;
-            console.info('INFO: setting urn: ' + urn);
-            const downloadURNsResult = await downloadBubbles();
-            console.info('downloadURNsResult = ' + JSON.stringify(downloadURNsResult));
-            if(downloadURNsResult) {
-              const s3Url = `${Config.AWS_S3_BASE_ENDPOINT}/${Config.AWS_S3_BUCKET}/result.obj.svf`;
-              this.setState({ urn: urn, s3Svf: s3Url, viewFileButtonDisabled: false });
-              clearInterval(this.state.processTranslationIntervalId);
-            }
-          }
-        }
-      }, 1000);
-      this.setState({ processTranslationIntervalId: intervalId });
+        }, 1000);
+        this.setState({ processTranslationIntervalId: intervalId });
+      } 
+    } catch(error) {
+      Alert.alert(
+        'Application Error',
+        `${error.message}`,
+        [
+          { text: 'Cancel', onPress: () => { console.info('Cancel pressed, please restart the app!'); }, style: 'cancel' },
+          { text: 'Retry', onPress: () => { initBackend(); } }
+        ],
+        { cancelable: false }
+      );
     }
   };
-
 }
