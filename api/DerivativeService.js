@@ -1,7 +1,7 @@
 'use strict';
 
 import Config from '../constants/Config';
-import {logRequestInfoToConsole, logResponseInfoToConsole, logResponseErrorToConsole, logFetchErrorToConsole} from './Utils';
+import {logRequestInfoToConsole, logResponseInfoToConsole, logFetchErrorToConsole} from './Utils';
 
 export const downloadBubbles = () => {
     const endpoint = `${Config.AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT}/derivative/downloadBubbles`;
@@ -16,8 +16,7 @@ export const downloadBubbles = () => {
             if (res.ok) {
                 return res.json();
             } else {
-                logResponseErrorToConsole(`Failed to download bubbles! ${JSON.stringify(res)}`);
-                alert('Failed to download bubbles!');
+                throw Error('Failed to download bubbles!');
             }
         })
         .catch((err) => {
@@ -38,8 +37,7 @@ export const getManifest = () => {
             if (res.ok) {
                 return res.json();
             } else {
-                logResponseErrorToConsole('Failed to get manifest!', res);
-                alert('Failed to get manifest!');
+                throw Error('Failed to get manifest!');
             }
         })
         .catch((err) => {
