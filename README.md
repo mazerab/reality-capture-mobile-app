@@ -77,7 +77,7 @@ If you need sample images, please go to this [directory](/assets/sample).
 * When the photoscene is fully processed, the View File button becomes available
 * Click on View File button to launch the Forge Viewer
 
-  ![Forge Viewer](/assets/images/lmv-viewer.png)
+  ![Forge Viewer](/assets/images/forge-viewer.png)
 
 # What's next
 
