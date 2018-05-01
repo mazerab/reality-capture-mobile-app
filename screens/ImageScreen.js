@@ -229,7 +229,13 @@ export default class ImageScreen extends React.Component {
         `${error.message}`,
         [
           { text: 'Cancel', onPress: () => { console.info('Cancel pressed, please restart the app!'); }, style: 'cancel' },
-          { text: 'Retry', onPress: () => { initBackend(); } }
+          { text: 'Retry', onPress: () => { 
+              initBackend();
+              // Reset ignore flags
+              this.translateIgnore = false;
+              this.manifestStatusIgnore = false;
+            } 
+          }
         ],
         { cancelable: false }
       );
@@ -290,7 +296,13 @@ export default class ImageScreen extends React.Component {
         `${error.message}`,
         [
           { text: 'Cancel', onPress: () => { console.info('Cancel pressed, please restart the app!'); }, style: 'cancel' },
-          { text: 'Retry', onPress: () => { initBackend(); } }
+          { text: 'Retry', onPress: () => { 
+              initBackend();
+              // Reset ignore flags
+              this.translateIgnore = false;
+              this.manifestStatusIgnore = false;
+            } 
+          }
         ],
         { cancelable: false }
       );
