@@ -25,6 +25,8 @@ You can pretest the mobile app by scanning the below QR code on your smartphone 
 
 If you need sample images, please go to this [directory](/assets/sample).
 
+If you would like to watch a demo video, please watch it on [YouTube](https://www.youtube.com/watch?v=D6HUcNLGDjo).
+
 ### Pre-requisites
 
 * You must have a valid AWS account
