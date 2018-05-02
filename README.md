@@ -96,7 +96,7 @@ Upon successful import, some of the mesh elements will need to be removed.
 
 Using the mesh palette, you can control the brush size to remove wider mesh areas.
 
-<img src="/assets/images/mesh-palette.png" width="200" height="150">
+<img src="/assets/images/mesh-palette.png" width="200" height="200">
 
 After some work, the final 3D mesh model looks much neater!
 <img src="/assets/images/final-view.png" width="450" height="300">
