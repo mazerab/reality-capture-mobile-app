@@ -12,7 +12,7 @@ import ErrorBoundary from '../api/ErrorBoundary';
 import OAuthForge from '../api/OAuthForge';
 import ProcessingScreen from './ProcessingScreen';
 import Utils from '../api/Utils';
-import {getPhotoSceneLink, pollProcessingStatus, processPhotoScene, setProcessingStatusInProgress} from '../api/RecapService';
+import {deletePhotoScene, getPhotoSceneLink, pollProcessingStatus, processPhotoScene, setProcessingStatusInProgress} from '../api/RecapService';
 import {initBackend, pushS3Url} from '../api/RedisService';
 
 let mTabNav;
@@ -283,6 +283,7 @@ export default class ImageScreen extends React.Component {
               if(downloadURNsResult) {
                 const s3Url = `${Config.AWS_S3_BASE_ENDPOINT}/${Config.AWS_S3_BUCKET}/result.obj.svf`;
                 this.setState({ urn: urn, s3Svf: s3Url, viewFileButtonDisabled: false });
+                const deleteResult = await deletePhotoScene();
                 clearInterval(this.state.processTranslationIntervalId);
               }
             }
