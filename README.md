@@ -101,7 +101,7 @@ Using the mesh palette, you can control the brush size to remove wider mesh area
 After some work, the final 3D mesh model looks much neater!
 <img src="/assets/images/final-view.png" width="450" height="300">
 
-Further techniques can be applied to convert the mesh model to a solid, below some YouTube videos:
+Further techniques can be applied to convert the mesh model to a solid, below some *YouTube* videos:
 1. [Mesh to Solid Reboot](https://youtu.be/dD5fhq-cZ_s?t=4m37s)
 1. [Triangle Mesh to Quad](https://www.youtube.com/watch?v=heFWhzNwPFI)
 
