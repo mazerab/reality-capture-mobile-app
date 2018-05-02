@@ -3,6 +3,27 @@
 import Config from '../constants/Config';
 import {logRequestInfoToConsole, logResponseInfoToConsole, logFetchErrorToConsole} from './Utils';
 
+export const deletePhotoScene = () => {
+    const endpoint = `${Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT}/recap/deletePhotoScene`;
+    const api = '/demo/recap/deletePhotoScene';
+    logRequestInfoToConsole(api, 'DELETE', endpoint, null);
+    return fetch(endpoint, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then((res) => {
+            logResponseInfoToConsole(api, 'DELETE', res);
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw Error('Failed to delete photoscene!');
+            }
+        })
+        .catch((err) => {
+            logFetchErrorToConsole(err);
+        }); 
+};
+
 export const getPhotoSceneLink = () => {
     const endpoint = `${Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT}/redis/photoscenelink`;
     const api = '/demo/redis/photoscenelink';
