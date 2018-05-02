@@ -85,7 +85,7 @@ One of the reasons for using Expo and XDE was its feature to **'Publish your app
 
 # What's next
 
-You now have access to a 3D mesh model in OBJ file format. To download the file locally, simply browse to $AWS_RECAP_LAMBDA_BASE_ENDPOINT/demo/redis/photoscenelink in your web browser.
+You now have access to a 3D mesh model in OBJ file format. To download the file locally, simply browse to $AWS_RECAP_LAMBDA_BASE_ENDPOINT/redis/photoscenelink in your web browser.
 
 This model can then be imported into Fusion 360 as a mesh model.
 
