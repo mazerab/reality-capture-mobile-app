@@ -88,15 +88,16 @@ One of the reasons for using Expo and XDE was its feature to **'Publish your app
 You now have access to a 3D mesh model in OBJ file format. This model can then be imported into Fusion 360 as a mesh model.
 
 ![Insert Mesh](/assets/images/insert-mesh.png)
+<img src="/assets/images/insert-mesh.png" width="150" height="100">
 
 Upon successful import, some of the mesh elements will need to be removed.
-![Fusion View](/assets/images/fusion-view.png)
+<img src="/assets/images/fusion-view.png" width="450" height="300">
 
 Using the mesh palette, you can control the brush size to remove wider mesh areas.
-![Mesh Palette](/assets/images/mesh-palette.png)
+<img src="/assets/images/mesh-palette.png" width="150" height="100">
 
 After some work, the final 3D mesh model looks much neater!
-![Final View](/assets/images/final-view.png)
+<img src="/assets/images/final-view.png" width="450" height="300">
 
 
 And if you want to develop an app for the web, please make sure you read [The Hitchhiker's Guide to ... Reality Capture API](https://forge.autodesk.com/blog/hitchhikers-guide-reality-capture-api).
