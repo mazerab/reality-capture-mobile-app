@@ -81,9 +81,23 @@ If you would like to watch a demo video, please watch it on [YouTube](https://ww
 
   <img src="/assets/images/forge-viewer.png" width="300" height="600">
 
+One of the reasons for using Expo and XDE was its feature to **'Publish your app'**. This gives you a *very* convenient way to let others try out your new app on their own phone. It delays the decision to buy an Apple Developer Account, MacBook, install Xcode, build and deploy. Just share the QRCode, like the one I posted at the beginning of this README, and away you go!
+
 # What's next
 
-One of the reasons for using Expo and XDE was its feature to **'Publish your app'**. This gives you a *very* convenient way to let others try out your new app on their own phone. It delays the decision to buy an Apple Developer Account, MacBook, install Xcode, build and deploy. Just share the QRCode, like the one I posted at the beginning of this README, and away you go!
+You now have access to a 3D mesh model in OBJ file format. This model can then be imported into Fusion 360 as a mesh model.
+
+![Insert Mesh](/assets/images/insert-mesh.png)
+
+Upon successful import, some of the mesh elements will need to be removed.
+![Fusion View](/assets/images/fusion-view.png)
+
+Using the mesh palette, you can control the brush size to remove wider mesh areas.
+![Mesh Palette](/assets/images/mesh-palette.png)
+
+After some work, the final 3D mesh model looks much neater!
+![Final View](/assets/images/final-view.png)
+
 
 And if you want to develop an app for the web, please make sure you read [The Hitchhiker's Guide to ... Reality Capture API](https://forge.autodesk.com/blog/hitchhikers-guide-reality-capture-api).
 
