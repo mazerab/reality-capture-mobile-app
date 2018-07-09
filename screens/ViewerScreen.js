@@ -1,17 +1,17 @@
-import React from 'react'
-import {Dimensions, StyleSheet, View, WebView} from 'react-native'
+import React from 'react';
+import {Dimensions, StyleSheet, View, WebView} from 'react-native';
 
-import Config from '../constants/Config'
+import Config from '../constants/Config';
 
-let width = Dimensions.get('window').width
+let width = Dimensions.get('window').width;
 
 class ForgeViewer extends React.Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             htmlTemplate: ''
-        }
+        };
     }
 
     componentDidMount() {
