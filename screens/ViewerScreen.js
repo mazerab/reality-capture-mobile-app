@@ -1,17 +1,17 @@
-import React from 'react';
-import {Dimensions, StyleSheet, View, WebView} from 'react-native';
+import React from 'react'
+import {Dimensions, StyleSheet, View, WebView} from 'react-native'
 
-import Config from '../constants/Config';
+import Config from '../constants/Config'
 
-let width = Dimensions.get('window').width;
+let width = Dimensions.get('window').width
 
 class ForgeViewer extends React.Component {
 
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             htmlTemplate: ''
-        };
+        }
     }
 
     componentDidMount() {
@@ -60,7 +60,7 @@ class ForgeViewer extends React.Component {
             <View style={styles.container}>
                 <WebView
                     source={{ html: HTML }}
-                    style={{ width:width}}
+                    style={{ width: width }}
                     javaScriptEnabled={true}
                     scrollEnabled={false}
                 />
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#0ff',
         alignItems: 'center',
         justifyContent: 'center'
-    },
+    }
 });
 
 export default ForgeViewer;
