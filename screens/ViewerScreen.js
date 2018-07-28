@@ -1,22 +1,21 @@
-import React from 'react';
-import {Dimensions, StyleSheet, View, WebView} from 'react-native';
+import React from 'react'
+import {Dimensions, StyleSheet, View, WebView} from 'react-native'
 
-import Config from '../constants/Config';
+import Config from '../constants/Config'
 
-let width = Dimensions.get('window').width;
+let width = Dimensions.get('window').width
 
 class ForgeViewer extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            htmlTemplate: ''
-        };
+  constructor (props) {
+    super(props)
+    this.state = {
+      htmlTemplate: ''
     }
+  }
 
-    componentDidMount() {
-        const svfURL = `${Config.AWS_S3_BASE_ENDPOINT}/${Config.AWS_S3_BUCKET}/result.obj.svf`;
-        const HTML = `
+  componentDidMount () {
+    const svfURL = `${Config.AWS_S3_BASE_ENDPOINT}/${Config.AWS_S3_BUCKET}/result.obj.svf`
+    const HTML = `
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,32 +49,32 @@ class ForgeViewer extends React.Component {
                 };
                 initializeViewer();
             </script>
-        `;
-        this.setState({ htmlTemplate: HTML});
-    }
+        `
+    this.setState({ htmlTemplate: HTML })
+  }
 
-    render() {
-        const HTML = this.state.htmlTemplate;
-        return (
-            <View style={styles.container}>
-                <WebView
-                    source={{ html: HTML }}
-                    style={{ width: width }}
-                    javaScriptEnabled={true}
-                    scrollEnabled={false}
-                />
-            </View>
-        );
-    }
+  render () {
+    const HTML = this.state.htmlTemplate
+    return (
+      <View style={styles.container}>
+        <WebView
+          source={{ html: HTML }}
+          style={{ width: width }}
+          javaScriptEnabled
+          scrollEnabled={false}
+        />
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#0ff',
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-});
+  container: {
+    flex: 1,
+    backgroundColor: '#0ff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
 
-export default ForgeViewer;
+export default ForgeViewer
