@@ -1,7 +1,6 @@
 import React from 'react'
 import { Platform } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-// import { TabNavigator, TabBarBottom } from 'react-navigation'
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs'
 
 import Colors from '../constants/Colors'

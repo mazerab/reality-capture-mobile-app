@@ -4,10 +4,10 @@ module.exports = {
 
   FORGE_APP_ID: 's85YumBg3IrVYIdiIwlsjHGDxlMKkGJp',
 
-  AWS_RECAP_LAMBDA_BASE_ENDPOINT: 'https://xikeyybzq8.execute-api.us-east-1.amazonaws.com/demo',
-  AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT: 'https://5hr0l2llhk.execute-api.us-east-1.amazonaws.com/demo',
+  AWS_RECAP_LAMBDA_BASE_ENDPOINT: 'https://<your recap server url>.execute-api.us-east-1.amazonaws.com/demo',
+  AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT: 'https://<your translation server url>.execute-api.us-east-1.amazonaws.com/demo',
   AWS_S3_BASE_ENDPOINT: 'https://s3.amazonaws.com',
-  AWS_S3_BUCKET: 'reality-capture-images',
+  AWS_S3_BUCKET: '<your bucket name>',
 
   PUSH_NOTIFICATION_DISABLED: true,
 
