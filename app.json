@@ -15,7 +15,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "bundleIdentifier": "com.autodesk.realitycapturemobileapp",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.autodesk.realitycapturemobileapp"
     }
   }
 }
