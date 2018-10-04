@@ -29,7 +29,7 @@ The biggest challenge here, is 'Authentication on mobile'. We want our phone to 
 
 You can pretest the mobile app by scanning the below QR code on your smartphone after installing Expo.
 
-<img src="/assets/images/qr-code.png" width="400" height="400">
+<img src="/assets/images/qr-code.png" width="400" height="300">
 
 If you need sample images, please go to this [directory](/assets/sample).
 
