@@ -5,7 +5,7 @@
 
 ### Thumbnail
 
-<img src="/assets/images/iOS%20Simulator.gif" width="250" height="400">
+<img src="/assets/images/iOS%20Simulator.gif" width="220" height="400">
 
 Forge Reality Capture + React Native
 
