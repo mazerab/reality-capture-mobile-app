@@ -87,7 +87,7 @@ If you need sample images, please go to this [directory](/assets/sample).
 
   <img src="/assets/images/forge-viewer.png" width="300" height="600">
 
-One of the reasons for using Expo and XDE was its feature to **'Publish your app'**. This gives you a *very* convenient way to let others try out your new app on their own phone. It delays the decision to buy an Apple Developer Account, MacBook, install Xcode, build and deploy. Just share the QRCode, like the one I posted at the beginning of this README, and away you go!
+One of the reasons for using Expo was its feature to **'Publish your app'**. This gives you a *very* convenient way to let others try out your new app on their own phone. It delays the decision to buy an Apple Developer Account, MacBook, install Xcode, build and deploy. Just share the QRCode, like the one I posted at the beginning of this README, and away you go!
 
 # What's next
 
