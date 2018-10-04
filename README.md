@@ -19,7 +19,7 @@ https://expo.io/@mazerab/reality-capture-mobile-app
 
 ## Introduction
 
-I’ve been interested in **React Native** for a while, and have been wanting to use it to build a mobile app that uses the Forge Reality Capture API. To help building a mobile app that will work in both Android and iOS environments, I chose to use the **Expo XDE** client. Expo is a set of tools, libraries and services which let you quickly build native iOS and Android apps by writing JavaScript. The current Expo documentation can be accessed [here](https://docs.expo.io/versions/v26.0.0/). 
+I’ve been interested in **React Native** for a while, and have been wanting to use it to build a mobile app that uses the Forge Reality Capture API. To help building a mobile app that will work in both Android and iOS environments, I chose to use the **Expo** client. Expo is a set of CLI tools, libraries and services which let you quickly build native iOS and Android apps by writing JavaScript. The current Expo documentation can be accessed [here](https://docs.expo.io/versions/v30.0.0/). 
 
 To interface with the camera roll :camera: of the smart phone, I reused code from [this](https://github.com/expo/image-upload-example) repository. 
 
