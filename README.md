@@ -5,7 +5,7 @@
 
 ### Thumbnail
 
-![thumbnail](/assets/images/iOS Simulator.gif)
+![thumbnail](/assets/images/iOS%20Simulator.gif)
 
 Forge Reality Capture + React Native
 
