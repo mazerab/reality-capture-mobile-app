@@ -1,5 +1,7 @@
 # Forge Reality Capture + React Native
 
+[![License](http://img.shields.io/:license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
+
 [![OAuth2](https://img.shields.io/badge/OAuth2-v1-green.svg)](http://forge.autodesk.com/)
 [![Viewer](https://img.shields.io/badge/Viewer-v2.17-green.svg)](http://forge.autodesk.com/)
 
