@@ -5,7 +5,7 @@
 
 ### Thumbnail
 
-![thumbnail](/assets/images/iOS%20Simulator.gif)
+<img src="/assets/images/iOS%20Simulator.gif" width="200" height="150">
 
 Forge Reality Capture + React Native
 
