@@ -3,8 +3,6 @@
 [![OAuth2](https://img.shields.io/badge/OAuth2-v1-green.svg)](http://forge.autodesk.com/)
 [![Viewer](https://img.shields.io/badge/Viewer-v2.17-green.svg)](http://forge.autodesk.com/)
 
-### Thumbnail
-
 <img src="/assets/images/iOS%20Simulator.gif" width="220" height="400">
 
 In this repository, we will walk through 'building a basic **React Native** app' that can handle Forge login so you can process image files on your smartphone through the **Forge Reality Capture API** and open the resulting viewable in the Forge Viewer.  With the mobile version of Forge Viewer, you can view the resulting Reality Capture OBJ file - think of it as a 3D mesh model of a photoscene that you have captured through pictures taken from your smartphone.
