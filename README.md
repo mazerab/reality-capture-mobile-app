@@ -115,7 +115,15 @@ Further techniques can be applied to convert the mesh model to a solid, below so
 
 And if you want to develop an app for the web, please make sure you read [The Hitchhiker's Guide to ... Reality Capture API](https://forge.autodesk.com/blog/hitchhikers-guide-reality-capture-api).
 
-### Authors
+## Further Reading
+
+### Tips & Tricks
+
+### Troubleshooting
+
+### License
+
+### Written By
 
 Bastien Mazeran [@BastienMazeran](https://twitter.com/BastienMazeran), Autodesk Inc.
 
