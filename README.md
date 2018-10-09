@@ -110,11 +110,11 @@ This model can then be imported into Fusion 360 as a mesh model. The overall ste
 <img src="/assets/images/insert-mesh.png" width="200" height="150">
 
 Upon successful import, some of the mesh elements will need to be removed.
-<img src="/assets/images/fusion-view.png" width="450" height="300">
+<img src="/assets/images/fusion-view.png" width="400" height="300">
 
 Using the mesh palette, you can control the brush size to remove wider mesh areas.
 
-<img src="/assets/images/mesh-palette.png" width="200" height="200">
+<img src="/assets/images/mesh-palette.png" width="150" height="180">
 
 After some work, the final 3D mesh model looks much neater!
 
