@@ -123,6 +123,8 @@ And if you want to develop an app for the web, please make sure you read [The Hi
 
 ### License
 
+This sample is licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT). Please see the [LICENSE](LICENSE) file for full details.
+
 ### Written By
 
 Bastien Mazeran [@BastienMazeran](https://twitter.com/BastienMazeran), Autodesk Inc.
