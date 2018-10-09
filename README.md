@@ -127,7 +127,7 @@ And if you want to develop an app for the web, please make sure you read [The Hi
 
 ## Further Reading
 
-### Tips & Tricks
+[The Hitchhiker's Guide to ... Reality Capture API](https://forge.autodesk.com/blog/hitchhikers-guide-reality-capture-api)
 
 ### Troubleshooting
 
