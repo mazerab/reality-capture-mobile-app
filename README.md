@@ -99,6 +99,10 @@ If you need sample images, please go to this [directory](/assets/sample).
 
 One of the reasons for using Expo was its feature to **'Publish your app'**. This gives you a *very* convenient way to let others try out your new app on their own phone. It delays the decision to buy an Apple Developer Account, MacBook, install Xcode, build and deploy. Just share the QRCode, like the one I posted at the beginning of this README, and away you go!
 
+### Deployment
+
+
+
 ## What's next
 
 You now have access to a 3D mesh model in OBJ file format. To download the file locally, simply browse to $AWS_RECAP_LAMBDA_BASE_ENDPOINT/redis/photoscenelink in your web browser.
