@@ -133,7 +133,7 @@ And if you want to develop an app for the web, please make sure you read [The Hi
 
 ### Troubleshooting
 
-<img src="/assets/images/react-native-debugger.gif" width="400" height="400">
+<img src="/assets/images/react-native-debugger.gif" width="600" height="400">
 
 ### License
 
