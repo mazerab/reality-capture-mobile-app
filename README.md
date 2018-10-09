@@ -133,6 +133,8 @@ And if you want to develop an app for the web, please make sure you read [The Hi
 
 ### Troubleshooting
 
+<img src="/assets/images/react-native-debugger.gif" width="400" height="400">
+
 ### License
 
 This sample is licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT). Please see the [LICENSE](LICENSE) file for full details.
