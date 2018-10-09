@@ -7,6 +7,10 @@
 
 ## Description
 
+Demonstrate how to build a mobile app using **Forge Reality Capture API**.
+
+Uses [Reality Capture](https://forge.autodesk.com/en/docs/reality-capture/v1/developers_guide/overview/) to convert camera pictures into a 3D mesh model in OBJ file format. Uses [Viewer](https://developer.autodesk.com/en/docs/viewer/v6/overview/) to show resulting 3D mesh model and textures. 
+
 <img src="/assets/images/iOS%20Simulator.gif" width="220" height="400">
 
 In this repository, we will walk through 'building a basic **React Native** app' that can handle Forge login so you can process image files on your smartphone through the **Forge Reality Capture API** and open the resulting viewable in the Forge Viewer.  With the mobile version of Forge Viewer, you can view the resulting Reality Capture OBJ file - think of it as a 3D mesh model of a photoscene that you have captured through pictures taken from your smartphone.
