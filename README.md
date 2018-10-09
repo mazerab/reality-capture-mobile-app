@@ -7,9 +7,9 @@
 
 ## Description
 
-Demonstrate how to build a mobile app using **Forge Reality Capture API**.
+Demonstrate how to build a mobile app using **Forge Reality Capture** API.
 
-Uses [Reality Capture](https://forge.autodesk.com/en/docs/reality-capture/v1/developers_guide/overview/) to convert camera pictures into a 3D mesh model in OBJ file format. Uses [Viewer](https://developer.autodesk.com/en/docs/viewer/v6/overview/) to show resulting 3D mesh model and textures. 
+Uses [Reality Capture](https://forge.autodesk.com/en/docs/reality-capture/v1/developers_guide/overview/) to convert camera pictures into a 3D mesh model in **OBJ** file format. Uses [Viewer](https://developer.autodesk.com/en/docs/viewer/v6/overview/) to show resulting 3D mesh model and textures. 
 
 <img src="/assets/images/iOS%20Simulator.gif" width="220" height="400">
 
