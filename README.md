@@ -117,6 +117,7 @@ Using the mesh palette, you can control the brush size to remove wider mesh area
 <img src="/assets/images/mesh-palette.png" width="200" height="200">
 
 After some work, the final 3D mesh model looks much neater!
+
 <img src="/assets/images/final-view.png" width="400" height="300">
 
 Further techniques can be applied to convert the mesh model to a solid, below some *YouTube* videos:
