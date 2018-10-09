@@ -87,10 +87,11 @@ If you need sample images, please go to this [directory](/assets/sample).
 * Login with your Autodesk ID
   <img src="/assets/images/adsk-sign-in.png" width="250" height="250">
 * You will see the main screen, select *"Pick an image from camera roll"* to select your first image
-  ![Main Screen](/assets/images/main-app-screen.png)
+
+  <img src="/assets/images/main-app-screen.png" width="200" height="400">
 * Repeat the process by adding three or more images (**Note**: the order in which you add the images does not matter)
 
-  ![Pick Image](/assets/images/pick-an-image-from-camera-roll.png)
+  <img src="/assets/images/pick-an-image-from-camera-roll.png" width="200" height="400">
 * When you have added enough images, select *"Process Photoscene"*
 * When the photoscene is fully processed, the View File button becomes available
 * Click on View File button to launch the Forge Viewer
