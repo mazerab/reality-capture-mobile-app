@@ -95,7 +95,7 @@ If you need sample images, please go to this [directory](/assets/sample).
 * When the photoscene is fully processed, the View File button becomes available
 * Click on View File button to launch the Forge Viewer
 
-  <img src="/assets/images/forge-viewer.png" width="300" height="600">
+  <img src="/assets/images/forge-viewer.png" width="200" height="400">
 
 ### Deployment
 
