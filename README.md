@@ -78,14 +78,17 @@ If you need sample images, please go to this [directory](/assets/sample).
 * You will then be redirected to the sign in page of Autodesk, you will get a 400 invalid redirect_uri error
   <img src="/assets/images/400-invalid-redirect-uri.png" width="250" height="250">
 * Go back to the Expo XDE Client and look for a message stating *"Copy this redirect url to the Forge app callback ..."*
-  <img src="/assets/images/redirect-url.png" width="600" height="100">
+
+  <img src="/assets/images/redirect-url.png" width="500" height="100">
 * Copy the URL
 * Edit your Forge App and change the callback URL to the URL you just copied
+
   <img src="/assets/images/callback-url.png" width="350" height="250">
 * Save the changes in your Forge app
 * Restart the project in Expo and this time you will be redirected to the Autodesk Sign-In page
 * Login with your Autodesk ID
-  <img src="/assets/images/adsk-sign-in.png" width="250" height="250">
+
+  <img src="/assets/images/adsk-sign-in.png" width="150" height="150">
 * You will see the main screen, select *"Pick an image from camera roll"* to select your first image
 
   <img src="/assets/images/main-app-screen.png" width="200" height="300">
