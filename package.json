@@ -10,14 +10,18 @@
   "dependencies": {
     "@expo/samples": "3.0.3",
     "expo": "36.0.2",
-    "react": "16.12.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
     "react-navigation": "4.0.10",
+    "react-navigation-tabs": "2.7.0",
     "standard": "14.3.1"
   },
   "devDependencies": {
     "eslint": "6.8.0",
     "eslint-plugin-react": "7.18.0",
-    "jest-expo": "36.0.1"
+    "jest-expo": "36.0.1",
+    "react": "16.12.0",
+    "react-native-gesture-handler": "1.5.3",
+    "react-native-reanimated": "1.6.0",
+    "react-native-web": "0.12.0-rc.1"
   }
 }

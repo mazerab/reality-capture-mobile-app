@@ -190,7 +190,7 @@ export default class ImageScreen extends React.Component {
   };
 
   processScene = async() => {
-    this.setState({ processing: true; })
+    this.setState({ processing: true });
     try {
       const processingStatusResult = await setProcessingStatusInProgress();
       const processResult = await processPhotoScene();
