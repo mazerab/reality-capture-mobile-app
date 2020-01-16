@@ -205,7 +205,7 @@ export default class ImageScreen extends React.Component {
                 && photoscenelink.photoscenelink !== 'blank') {
                 console.info('INFO: Processing is complete and photoscenelink is available to upload to Autodesk Cloud...');
                 this.translateIgnore = true;
-                this.setState({ processing: false; })
+                this.setState({ processing: false });
                 clearInterval(this.state.processPhotosceneIntervalId);
                 this.uploadAndTranslate();
               }
