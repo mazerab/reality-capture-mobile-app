@@ -1,11 +1,11 @@
-import React from 'react'
-import { ActivityIndicator, Modal, StyleSheet, View } from 'react-native'
+import React from 'react';
+import { ActivityIndicator, Modal, StyleSheet, View } from 'react-native';
 
 const ProcessingScreen = props => {
   const {
     processing,
     ...attributes
-  } = props
+  } = props;
   return (
     <Modal
       transparent
@@ -18,7 +18,7 @@ const ProcessingScreen = props => {
         </View>
       </View>
     </Modal>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -38,6 +38,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around'
   }
-})
+});
 
-export default ProcessingScreen
+export default ProcessingScreen;
