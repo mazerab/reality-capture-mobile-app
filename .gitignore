@@ -59,5 +59,13 @@ typings/
 
 # next.js build output
 .next
+
+# app config
 constants/Config.js
+
+# NPM cache
 package-lock.json
+
+# Expo folders
+.expo
+.expo-shared
