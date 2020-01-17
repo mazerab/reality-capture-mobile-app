@@ -1,10 +1,10 @@
 'use strict';
 
-import Config from '../constants/Config';
+import { AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT } from '../constants/Config';
 import {logRequestInfoToConsole, logResponseInfoToConsole, logFetchErrorToConsole} from './Utils';
 
 export const downloadBubbles = () => {
-  const endpoint = `${Config.AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT}/derivative/downloadBubbles`;
+  const endpoint = `${AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT}/derivative/downloadBubbles`;
   const api = '/demo/derivative/downloadBubbles';
   logRequestInfoToConsole(api, 'GET', endpoint, null);
   return fetch(endpoint, {
@@ -25,7 +25,7 @@ export const downloadBubbles = () => {
 };
 
 export const getManifest = () => {
-  const endpoint = `${Config.AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT}/derivative/getManifest`;
+  const endpoint = `${AWS_UPLOAD_TRANSLATE_LAMBDA_BASE_ENDPOINT}/derivative/getManifest`;
   const api = '/demo/derivative/getManifest';
   logRequestInfoToConsole(api, 'GET', endpoint, null);
   return fetch(endpoint, {

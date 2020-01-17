@@ -1,11 +1,11 @@
 'use strict';
 
 import PathParse from 'path-parse';
-import Config from '../constants/Config';
+import { AWS_S3_BASE_ENDPOINT, AWS_S3_BUCKET } from '../constants/Config';
 
 export const uploadImageToS3BucketAsync = (imageFileUri) => {
   const fileName = PathParse(imageFileUri).base;
-  const s3Url = `${Config.AWS_S3_BASE_ENDPOINT}/${Config.AWS_S3_BUCKET}/${fileName}`;
+  const s3Url = `${AWS_S3_BASE_ENDPOINT}/${AWS_S3_BUCKET}/${fileName}`;
   const photo = {
     'name': fileName,
     'type': 'image/jpeg',

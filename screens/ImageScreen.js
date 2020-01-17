@@ -1,8 +1,10 @@
 import React from 'react';
 import { ActivityIndicator, Alert, Button, Image, Share, StatusBar, StyleSheet, Text, View } from 'react-native';
-import { FileSystem, Font, ImagePicker, Notifications, Permissions } from 'expo';
+import { FileSystem, ImagePicker, Notifications } from 'expo';
+import * as Font from 'expo-font';
+import * as Permissions from 'expo-permissions';
 
-import Config from '../constants/Config';
+import { AWS_S3_BASE_ENDPOINT, AWS_S3_BUCKET, PUSH_NOTIFICATION_DISABLED } from '../constants/Config';
 
 import {registerForPushNotificationsAsync} from '../api/PushNotificationService';
 import {uploadImageToS3BucketAsync} from '../api/AWSS3Service';
@@ -140,7 +142,7 @@ export default class ImageScreen extends React.Component {
           if (this.state.imageCount > 2) { // can only send a photoscene for processing if more than 3 images have been added
             this.setState({ processButtonDisabled: false });
           }
-          const pushS3UrlResult = await pushS3Url(uploadResult.s3Url);
+          await pushS3Url(uploadResult.s3Url);
         }
       }
     } catch (e) {
@@ -192,10 +194,10 @@ export default class ImageScreen extends React.Component {
   processScene = async() => {
     this.setState({ processing: true });
     try {
-      const processingStatusResult = await setProcessingStatusInProgress();
+      await setProcessingStatusInProgress();
       const processResult = await processPhotoScene();
       if (processResult) {
-        if (Config.PUSH_NOTIFICATION_DISABLED) { // iOS simulator does not support push notifications
+        if (PUSH_NOTIFICATION_DISABLED) { // iOS simulator does not support push notifications
           const intervalId = setInterval(async () => {
             if(this.state.processing) {
               const progressResult = await pollProcessingStatus();
@@ -213,7 +215,7 @@ export default class ImageScreen extends React.Component {
           }, 1000)
           this.setState({ processPhotosceneIntervalId: intervalId });
         } else { // Push notifications
-          const intervalId = setInterval( async () => {
+          setInterval( async () => {
             if(this.state.processing) {
               if (this.state.notification.data && this.state.notification.data.Photoscene.scenelink !== 'blank') {
                 this.setState({ processing: false });
@@ -281,9 +283,9 @@ export default class ImageScreen extends React.Component {
               const downloadURNsResult = await downloadBubbles();
               console.info('downloadURNsResult: ' + JSON.stringify(downloadURNsResult));
               if(downloadURNsResult) {
-                const s3Url = `${Config.AWS_S3_BASE_ENDPOINT}/${Config.AWS_S3_BUCKET}/result.obj.svf`;
+                const s3Url = `${AWS_S3_BASE_ENDPOINT}/${AWS_S3_BUCKET}/result.obj.svf`;
                 this.setState({ urn: urn, s3Svf: s3Url, viewFileButtonDisabled: false });
-                const deleteResult = await deletePhotoScene();
+                await deletePhotoScene();
                 clearInterval(this.state.processTranslationIntervalId);
               }
             }

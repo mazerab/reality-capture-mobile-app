@@ -1,7 +1,8 @@
 import React from 'react';
-import {Dimensions, StyleSheet, View, WebView} from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
+import { WebView } from 'react-native-webview';
 
-import Config from '../constants/Config';
+import { AWS_S3_BASE_ENDPOINT, AWS_S3_BUCKET } from '../constants/Config';
 
 let width = Dimensions.get('window').width;
 
@@ -14,7 +15,7 @@ class ForgeViewer extends React.Component {
   }
 
   componentDidMount () {
-    const svfURL = `${Config.AWS_S3_BASE_ENDPOINT}/${Config.AWS_S3_BUCKET}/result.obj.svf`;
+    const svfURL = `${AWS_S3_BASE_ENDPOINT}/${AWS_S3_BUCKET}/result.obj.svf`;
     const HTML = `
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />

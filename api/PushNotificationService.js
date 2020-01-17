@@ -1,10 +1,11 @@
 'use strict';
 
-import { Permissions, Notifications } from 'expo';
-import Config from '../constants/Config';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import { AWS_RECAP_LAMBDA_BASE_ENDPOINT } from '../constants/Config';
 
 export const registerForPushNotificationsAsync = async () => {
-  const PUSH_ENDPOINT = `${Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT}/expo/tokens`;
+  const PUSH_ENDPOINT = `${AWS_RECAP_LAMBDA_BASE_ENDPOINT}/expo/tokens`;
   const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
   let finalStatus = existingStatus;
   // only ask if permissions have not already been determined, because

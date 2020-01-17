@@ -1,10 +1,10 @@
 'use strict';
 
-import Config from '../constants/Config';
-import {logRequestInfoToConsole, logResponseInfoToConsole, logFetchErrorToConsole} from './Utils';
+import { AWS_RECAP_LAMBDA_BASE_ENDPOINT } from '../constants/Config';
+import { logRequestInfoToConsole, logResponseInfoToConsole, logFetchErrorToConsole } from './Utils';
 
 export const deletePhotoScene = () => {
-  const endpoint = `${Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT}/recap/deletePhotoScene`;
+  const endpoint = `${AWS_RECAP_LAMBDA_BASE_ENDPOINT}/recap/deletePhotoScene`;
   const api = '/demo/recap/deletePhotoScene';
   logRequestInfoToConsole(api, 'DELETE', endpoint, null);
   return fetch(endpoint, {
@@ -25,7 +25,7 @@ export const deletePhotoScene = () => {
 };
 
 export const getPhotoSceneLink = () => {
-  const endpoint = `${Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT}/redis/photoscenelink`;
+  const endpoint = `${AWS_RECAP_LAMBDA_BASE_ENDPOINT}/redis/photoscenelink`;
   const api = '/demo/redis/photoscenelink';
   logRequestInfoToConsole(api, 'GET', endpoint, null);
   return fetch(endpoint, {
@@ -46,7 +46,7 @@ export const getPhotoSceneLink = () => {
 };
 
 export const pollProcessingStatus = () => {
-  const endpoint = `${Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT}/redis/processingstatus`;
+  const endpoint = `${AWS_RECAP_LAMBDA_BASE_ENDPOINT}/redis/processingstatus`;
   const api = '/demo/redis/processingstatus';
   logRequestInfoToConsole(api, 'GET', endpoint, null);
   return fetch(endpoint, {
@@ -67,7 +67,7 @@ export const pollProcessingStatus = () => {
 };
 
 export const processPhotoScene = () => {
-  const endpoint = `${Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT}/recap/processPhotoScene`;
+  const endpoint = `${AWS_RECAP_LAMBDA_BASE_ENDPOINT}/recap/processPhotoScene`;
   const api = '/demo/recap/processPhotoScene';
   logRequestInfoToConsole(api, 'POST', endpoint, null);
   return fetch(endpoint, {
@@ -88,7 +88,7 @@ export const processPhotoScene = () => {
 };
 
 export const setProcessingStatusInProgress = () => {
-  const endpoint = `${Config.AWS_RECAP_LAMBDA_BASE_ENDPOINT}/redis/processingstatus?processingstatus=InProgress`;
+  const endpoint = `${AWS_RECAP_LAMBDA_BASE_ENDPOINT}/redis/processingstatus?processingstatus=InProgress`;
   const api = '/demo/redis/processingstatus';
   logRequestInfoToConsole(api, 'POST', endpoint, null);
   return fetch(endpoint, {
