@@ -1,7 +1,8 @@
 import React from 'react';
 import { ActivityIndicator, Alert, Button, Image, Share, StatusBar, StyleSheet, Text, View } from 'react-native';
-import { FileSystem, ImagePicker, Notifications } from 'expo';
+import { FileSystem, Notifications } from 'expo';
 import * as Font from 'expo-font';
+import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
 import { AWS_S3_BASE_ENDPOINT, AWS_S3_BUCKET, PUSH_NOTIFICATION_DISABLED } from '../constants/Config';
