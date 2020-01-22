@@ -1,6 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, Alert, Button, Image, Share, StatusBar, StyleSheet, Text, View } from 'react-native';
-import { FileSystem, Notifications } from 'expo';
+import { Notifications } from 'expo';
+import * as FileSystem from 'expo-file-system';
 import * as Font from 'expo-font';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
