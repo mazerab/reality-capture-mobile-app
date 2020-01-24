@@ -1,4 +1,3 @@
-import React from 'react';
 import { Platform } from 'react-native';
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 
@@ -23,13 +22,10 @@ export default createBottomTabNavigator(
         let iconName;
         switch (routeName) {
           case 'Images':
-            iconName =
-                    Platform.OS === 'ios'
-                      ? `ios-camera${focused ? '' : '-outline'}`
-                      : 'md-camera'
+            iconName = (Platform.OS === 'ios') ? `ios-camera${focused ? '' : '-outline'}` : 'md-camera';
             break;
           case 'ForgeViewer':
-            iconName = Platform.OS === 'ios' ? `ios-cloud-done${focused ? '' : '-outline'}` : 'md-cloud-done'
+            iconName = (Platform.OS === 'ios') ? `ios-cloud-done${focused ? '' : '-outline'}` : 'md-cloud-done';
             break;
         }
         return (

@@ -79,7 +79,6 @@ export default class ImageScreen extends React.Component {
   }
 
   render() {
-    let { image } = this.state;
     mTabNav = this.props.navigation;
     return(
       <View style={{ flex:1, alignItems: 'center', justifyContent: 'center'}}>
@@ -281,9 +280,9 @@ export default class ImageScreen extends React.Component {
             }
             if (manifestStatus === 'success' && !this.manifestStatusIgnore && urn) {
               this.manifestStatusIgnore = true;
-              console.info('INFO: setting urn: ' + urn);
+              console.info(`INFO: setting urn: ${urn}`);
               const downloadURNsResult = await downloadBubbles();
-              console.info('downloadURNsResult: ' + JSON.stringify(downloadURNsResult));
+              console.info(`downloadURNsResult: ${JSON.stringify(downloadURNsResult)}`);
               if(downloadURNsResult) {
                 const s3Url = `${AWS_S3_BASE_ENDPOINT}/${AWS_S3_BUCKET}/result.obj.svf`;
                 this.setState({ urn: urn, s3Svf: s3Url, viewFileButtonDisabled: false });
