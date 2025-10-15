@@ -10,7 +10,7 @@
   "dependencies": {
     "@expo/samples": "3.0.3",
     "@react-native-community/masked-view": "0.1.5",
-    "expo": "36.0.2",
+    "expo": "48.0.0",
     "expo-asset": "8.0.0",
     "expo-file-system": "8.0.0",
     "expo-font": "8.0.0",
